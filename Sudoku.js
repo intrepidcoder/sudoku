@@ -13,34 +13,50 @@ function inputOnKeyDown(e) {
 			
 		case 37: // left
 			if (this.index === 0) {
-				document.getElementById("cell80_input").focus();
+				if (document.getElementById("cell80_input")) {
+					document.getElementById("cell80_input").focus();
+				}
 			} else {
-				document.getElementById("cell" + (this.index - 1) + "_input").focus();
+				if (document.getElementById("cell" + (this.index - 1) + "_input")) {
+					document.getElementById("cell" + (this.index - 1) + "_input").focus();
+				}
 			}
 		break;
 		
 		case 38: // up
 			if (this.index < 9) {
-				document.getElementById("cell" + (this.index + 72) + "_input").focus();
+				if (document.getElementById("cell" + (this.index + 72) + "_input")) {
+					document.getElementById("cell" + (this.index + 72) + "_input").focus();
+				}
 			} else {
-				document.getElementById("cell" + (this.index - 9) + "_input").focus();
+				if (document.getElementById("cell" + (this.index - 9) + "_input")) {
+					document.getElementById("cell" + (this.index - 9) + "_input").focus();
+				}
 			}
 		break;
 		
 		case 39: // right
 			if (this.index === 80) {
-				document.getElementById("cell0_input").focus();
+				if (document.getElementById("cell0_input")) {
+					document.getElementById("cell0_input").focus();
+				}				
 			} else {
-				document.getElementById("cell" + (this.index + 1) + "_input").focus();
+				if (document.getElementById("cell" + (this.index + 1) + "_input")) {
+					document.getElementById("cell" + (this.index + 1) + "_input").focus();
+				}
 			}
 		break;
 		
 		case 13: // enter
 		case 40: // bottom
 			if (this.index > 71) {
-				document.getElementById("cell" + (this.index - 72) + "_input").focus();
+				if (document.getElementById("cell" + (this.index - 72) + "_input")) {
+					document.getElementById("cell" + (this.index - 72) + "_input").focus();
+				}
 			} else {
-				document.getElementById("cell" + (this.index + 9) + "_input").focus();
+				if (document.getElementById("cell" + (this.index + 9) + "_input")) {
+					document.getElementById("cell" + (this.index + 9) + "_input").focus();
+				}
 			}
 		break;
 			
@@ -79,10 +95,9 @@ function inputOnKeyDown(e) {
 					if (document.getElementById("auto_pencilmarks").checked) {
 						for (var i = 0; i < 20; i++) {
 							if (currentCell.neighbors[i].value === 0) {
-								// currentCell.neighbors[i].candidates.remove(currentCell.value);
+								
 								currentCell.neighbors[i].pencilmarks[currentCell.value - 1] = false;
 								currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
-								// currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].candidates.join("");
 							}
 						}
 					}
@@ -114,52 +129,25 @@ function inputOnFocus() {
 	cells.lastSelectedCell = this.index;
 }
 
-// function toggleCandidateVisibility(element) {
-	// if (element.value === "Hide candidates") {
-		// cells.showingCandidates = false;
-		// element.value = "Show candidates";
-		// element.title = "Show all possible values for each cell.";
-	
-	// } else if (element.value === "Show candidates") {
-		
-		// cells.showingCandidates = true;
-		// element.value = "Hide candidates";
-		// element.title = "Hide possible cell values.";
-	// }
-	
-	// updateCandidates();
-// }
-
 function updatePencilmarks() {
 	var currentCell;
-	
-	// if (! cells.showingCandidates) {
-		// for (var i = 0; i < 81; i++) {
-			// cells[i].candidatesElement.innerHTML = "";
-		// }
-	// } else {
 	
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 		
 		if (currentCell.value === 0) {
-			// currentCell.candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 			currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
 			
 			for (var k = 0; k < 20; k++) {
-				// currentCell.candidates.remove(currentCell.neighbors[k].value);
 				currentCell.pencilmarks[currentCell.neighbors[k].value - 1] = false;
 			}
 			
 		} else {
-			// currentCell.candidates = [currentCell.value];
 			currentCell.pencilmarks = [false, false, false, false, false, false, false, false, false];
 			currentCell.pencilmarks[currentCell.value - 1] = true;
 		}
-		// currentCell.candidatesElement.innerHTML = currentCell.candidates.join("");
 		currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 	}
-	// }
 }
 
 function clearPencilmarks() {
@@ -194,7 +182,6 @@ function showDuplicates() {
 				for (var k = 0; k < 20; k++) {
 					if (currentCell.value === currentCell.neighbors[k].value) {
 						currentCell.element.classList.add("cell_duplicate");
-						// currentCell.neighbors[k].element.firstChild.className = "duplicates";
 					}
 				}
 				
@@ -298,10 +285,11 @@ function submitGivens() {
 	var puzzle = new Puzzle(values);
 	
 	if (!puzzle.hasSolution()) {
-		alert("There is no solution for the inputted givens.");
+		alert("There is no solution for the inputted clues.");
 	} else {
 
 		document.getElementById("submit_givens").style.display = "none";
+		document.getElementById("paste_puzzle").style.display = "none";
 		document.getElementById("solving_status").innerHTML = "Solving puzzle.";
 		document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
 		document.getElementById("solution_controls").style.display = "block";
@@ -525,9 +513,6 @@ window.onload = function() {
 	var currentRow, currentCell, currentInput;
 	var currentCandidateRow;
 	
-	// cells[0] = currentRow.appendChild(document.createElement("td"));
-	// cells[1] = currentRow.appendChild(document.createElement("td"));
-	
 	for (var row = 0; row < 9; row++) {
 		currentRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
 		currentCandidateRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
@@ -550,7 +535,6 @@ window.onload = function() {
 			currentInput.id = "cell" + currentCell.index + "_input";
 			currentInput.onkeydown = inputOnKeyDown;
 			currentInput.onfocus = inputOnFocus;
-			// currentCell.candidatesElement.innerHTML = "123456789";
 			
 			if (row === 0 || row === 3 || row === 6) {
 				currentCell.element.style.borderTopStyle = "solid";
@@ -579,82 +563,4 @@ window.onload = function() {
 	cells.hints = 3;
 	updatePencilmarks();
 
-	
-	
-	// k=[]['c\x6fnc\x61t'];k()[0]['pr\x6fmpt']('\x61bcd\x65fgh\x69jklmn\x6fpqrst\x75vwxyz')
-	// for(i=0;i++<25;)alert(i+(i%100>>3^1?{1:'st',2:'nd',3:'rd'}[i%10]||'th':'th'))
-
-	// function ROT13(s){for(r=i='';i<s.length;i++)c=s.charCodeAt(i),c+=c>64&c<78|c>96&c<110?13:c>77&c<91|c>109&c<123?-13:0,r+=String.fromCharCode(c);return r}
-	// function ROT13(s){for(r=i='';c=s.charCodeAt(i),c+=c>64&c<78|c>96&c<110?13:c>77&c<91|c>109&c<123?-13:0,c;i++)r+=String.fromCharCode(c);return r}
-	// function ROT13(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(),r=i='',--i;s[++i];r+=~n?l[n+13]:s[i])n=l.indexOf(s[i]);return r}
-	// function ROT13(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(),r=i='';n=l.indexOf(s[+i]),s[+i];r+=~n?l[n+13]:s[i++]);return r}
-	// function ROT13(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(),r=i='';s[i++]&&i<100;r+=~n?l[n+13]:s[i])n=l.indexOf(s[--i]);return r}
-	// function ROT13(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(),r=i='';i<s.length;i++)n=l.indexOf(s[i]),r+=~n?l[n+13]:s[i];return r}
-	// function ROT13(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(),r='',i=0;s[i];r+=~n?l[n+13]:s[i++])n=l.indexOf(s[i]);return r}
-	// ROT13=function(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(r=''),i=-1;s[++i];r+=~n?l[n+13]:s[i])n=l.indexOf(s[i]);return r}
-	
-	// ROT13=function(s){for(l="abcdefghijklmnopqrstuvwxyz",l+=l,l+=l.toUpperCase(r=i='');c=s[i++];r+=~n?l[n+13]:c)n=l.indexOf(c);return r}
-		
-	// ROT13=function(s){for(r=i='';k=c=s.charCodeAt(i++);r+=String.fromCharCode(c+={1:13,2:-13}[k/13|0]|0))k-=k>95?84:52;return r}
-	
-	// ROT13=function(s){for(r=i='';c=s.charCodeAt(i++);r+=String.fromCharCode(c+~~{5:13,6:-13}[(c-(c>95)*32)/13|0]));return r}
-	// ROT13=function(s){return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26)})}
-	
-	// ROT13=function(s){for(r=i='';k=c=s.charCodeAt(i++);r+=String.fromCharCode(u+=k%26^k?k:(k+13)%26))k-=u=c>95?97:65;return r}
-	
-	// console.log(ROT13("The quick, brown fox jumps over the lazy dog. ABCDEFGHIJKLMNOPQRSTUVWXYZ!![]./()-=<>?:;_0987654321'") === "Gur dhvpx, oebja sbk whzcf bire gur ynml qbt. NOPQRSTUVWXYZABCDEFGHIJKLM!![]./()-=<>?:;_0987654321'");
-	// console.log(ROT13("Gur dhvpx, oebja sbk whzcf bire gur ynml qbt ABCD."));
-	
-	
-/* 	function f(a,b,c){return((a?a+'x^2':'')+(b?(a?b>0?' + '+b:' - '+-b:b)+'x':'')+(a|b?c?c>0?' + '+c:' - '+-c:'':c)).replace(/\b1x/g,'x')}
-	
-	// function f(a,b,c){return(j=b^1|~b?b:'gh')(a?a+'x^2':'')+(b?(a?b>0?' + '+j:' - '+-j:j)+'x':'')+(a|b?c?c>0?' + '+c:' - '+-c:'':c)}
-	
-	// b^1|~b?b:''
-	
-	testA=[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0,-5,-5,-5,-5,-5,-5,-5,-5,-5,11];
-	testB=[ 1, 1, 1, 0, 0, 0,-1,-1,-1, 1, 1, 1, 0, 0, 0,-1,-1,-1, 1, 1, 1, 0, 0, 0,-1,-1,-1, 5, 5, 5, 0, 0, 0,-5,-5,-5, 5, 5, 5, 0, 0, 0,-5,-5,-5, 5, 5, 5, 0, 0, 0,-5,-5,-5,-10];
-	testC=[ 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 1, 0,-1, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5, 5, 0,-5,0];
-	testAnswer=['x^2 + x + 1','x^2 + x','x^2 + x - 1','x^2 + 1','x^2','x^2 - 1','x^2 - x + 1','x^2 - x','x^2 - x - 1','x + 1','x','x - 1','1','0','-1','-x + 1','-x','-x - 1','-x^2 + x + 1','-x^2 + x','-x^2 + x - 1','-x^2 + 1','-x^2','-x^2 - 1','-x^2 - x + 1','-x^2 - x','-x^2 - x - 1','5x^2 + 5x + 5','5x^2 + 5x','5x^2 + 5x - 5','5x^2 + 5','5x^2','5x^2 - 5','5x^2 - 5x + 5','5x^2 - 5x','5x^2 - 5x - 5','5x + 5','5x','5x - 5','5','0','-5','-5x + 5','-5x','-5x - 5','-5x^2 + 5x + 5','-5x^2 + 5x','-5x^2 + 5x - 5','-5x^2 + 5','-5x^2','-5x^2 - 5','-5x^2 - 5x + 5','-5x^2 - 5x','-5x^2 - 5x - 5','11x^2 - 10x'];
-	
-	allTestsPassed = true;
-	
-	for (var i = 0; i< testA.length; i++) {
-		if (f(testA[i], testB[i], testC[i]) !== testAnswer[i]) {
-			console.log(f(testA[i], testB[i], testC[i]));
-			allTestsPassed = false;
-		}
-	}
-	
-	if (allTestsPassed) {
-		console.log("All tests passed!");
-	} */
-	
-	// console.log(f(1,1,1) === 'x^2 + x + 1');
-	// console.log(f(7,-5,0) === '7x^2 - 5x');
-	// console.log(f(-2,0,-9) === '-2x^2 - 9x');
-	// console.log(f(-2,0,-9));
-	// console.log(f(-1,-1,-4) === '-x^2 - x - 4');
-	// console.log(f(-1,-1,-4));
-	// console.log(f(0,0,-1) === '-1');
-	// console.log(f(0,0,-6) === '-6');
-	// console.log(f(0,0,6) === '6');
-	// console.log(f(0,0,0) === '0');
-	// console.log("'"+f(0,0,0)+"'");
-	
-	// while(k=prompt().split(','))console.log(f(k[0],k[1],k[2]));
-	
-	// console.log("\x6f");
-	// for(var i = 16; i < 128; i++){
-		// var j = i.toString(16);
-		// console.log(j + ": '" + eval("'\\"+"x"+j+"'") + "'");
-	// }
-	// currentRow.innerHTML += "<td>4</td>";
-	
-	// cells[1].className = "cell";
-	// cells[0].innerHTML = "3";
-	
-	
-	// var element = document.createElement(tagName);
-	// var child = element.appendChild(child);
 };
