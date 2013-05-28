@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<script type="text/javascript" language="JavaScript" src="Puzzle.js"></script>
+		<script type="text/javascript" language="JavaScript" src="Sudoku.js"></script>
+		<link rel="stylesheet" type="text/css" href="Sudoku.css" />
+
+	</head>
+
+	<body>
+		<!-- <textarea id="hi">hi</textarea> -->
+		<table id="grid_table">
+			<tbody>
+				<!-- <tr>
+					<td class="cell cell_top cell_left">1</td>
+					<td class="cell"><input type="text" value="1" /></td>
+				</tr>
+				<tr>
+					<td class="candidates">123456789</td>
+					<td class="candidates">-</td>
+				</tr> -->
+			</tbody>
+		</table>
+		<div id="controls">
+			<form name="controls_form">
+				<div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div>
+				<ul>
+					<li>
+						<input type="button" name="update_pencilmarks" value="Clear cells" title="Delete all cell values and reset pencilmarks." onclick="clearCells();" />
+					</li><li>
+						<input type="button" name="submit_givens" id="submit_givens" value="Submit clues" title="Set all filled cells as read-only to enable guessing and hints." onclick="submitGivens();" />
+					</li><li>
+						<input type="button" name="" value="Paste puzzle" title="Paste values to place into the puzzle. Note: this overwrites existing values." onclick="pastePuzzle();" />
+					</li>
+				</ul>
+				<div class="small_header">Cell Highlighting:</div>
+				<ul>
+					<li>
+						<input type="button" name="highlight_ones" value="1" class="highlight_button" title="Highlight all cells that do not have a pencil mark of one." onclick="highlight(1);" />
+						<input type="button" name="highlight_twos" value="2" class="highlight_button" title="Highlight all cells that do not have a pencil mark of two." onclick="highlight(2);" />
+						<input type="button" name="highlight_threes" value="3" class="highlight_button" title="Highlight all cells that do not have a pencil mark of three." onclick="highlight(3);" />
+						<input type="button" name="highlight_fours" value="4" class="highlight_button" title="Highlight all cells that do not have a pencil mark of four." onclick="highlight(4);" />
+						<input type="button" name="highlight_fives" value="5" class="highlight_button" title="Highlight all cells that do not have a pencil mark of five." onclick="highlight(5);" />
+						<input type="button" name="highlight_sixes" value="6" class="highlight_button" title="Highlight all cells that do not have a pencil mark of six." onclick="highlight(6);" />
+						<input type="button" name="highlight_sevens" value="7" class="highlight_button" title="Highlight all cells that do not have a pencil mark of seven." onclick="highlight(7);" />
+						<input type="button" name="highlight_eights" value="8" class="highlight_button" title="Highlight all cells that do not have a pencil mark of eight." onclick="highlight(8);" />
+						<input type="button" name="highlight_nines" value="9" class="highlight_button" title="Highlight all cells that do not have a pencil mark of nine." onclick="highlight(9);" />
+						<input type="button" name="highlight_none" value="Clear" class="highlight_button" title="Clear all highlighting." onclick="highlight(0);" />
+					</li>
+				</ul>
+				
+				<div class="small_header">Pencil Marks:</div>
+				<ul>
+					<!-- <li>
+						<input type="button" value="Hide candidates" onclick="toggleCandidateVisibility(this);" title="Hide possible cell values." />
+					</li> -->
+					<li>
+						<input type="radio" name="write_mode" value="values" id="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." checked="checked" selected="selected" />
+						<label for="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." >Enter values.</label>
+					</li><li>
+						<input type="radio" name="write_mode" value="pencilmarks" id="write_mode_pencilmarks" title="Enter pencil marks by clicking on a cell and typing to insert or delete the desired pencil mark." />
+						<label for="write_mode_pencilmarks" title="Enter pencil marks by clicking on a cell and typing to insert or delete the desired pencil mark.">Enter pencil marks.</label>
+					</li><li>
+						<input type="checkbox" name="auto_pencilmarks" checked="checked" id="auto_pencilmarks" title="Automatically remove pencil marks when cells are filled." />
+						<label for="auto_pencilmarks" title="Automatically remove pencil marks when cells are filled.">Automatically remove pencil marks.<label>
+					</li><li>
+						<input type="button" name="update_pencilmarks" value="Update" title="Change pencil marks to reflect the current values." onclick="updatePencilmarks();" />
+						<input type="button" name="reset_pencilmarks" value="Reset" title="Add all pencil marks to empty cells." onclick="clearPencilmarks();" />
+					</li>
+				</ul>
+				
+				<div class="small_header">Validation:</div>
+				<ul>
+					<li>
+						<input type="checkbox" name="show_duplicates" checked="checked" id="show_duplicates" title="Highlight duplicate values." onclick="showDuplicates();" />
+						<label for="show_duplicates" title="Highlight duplicate values red.">Show duplicates.<label>
+					</li>
+					<li></li>
+				</ul>
+				
+				<div id="guessing_tools">
+					<div class="small_header">Guessing tools:</div>
+					<ul>
+						<li>
+							Set blank cells:
+							<select title="Set the blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
+								<option selected="selected" style="color: black;">Black</option>
+								<option style="color: blue;">Blue</option>
+								<option style="color: red;">Red</option>
+								<option style="color: green;">Green</option>
+								<option style="color: purple;">Purple</option>
+							</select>
+						</li><li>
+							Delete cells highlighted:
+							<select title="Delete all cells of a certain color." onchange="deleteColoredCells(this);">
+								<option selected="selected">Select Color</option>
+								<option style="color: blue;">Blue</option>
+								<option style="color: red;">Red</option>
+								<option style="color: green;">Green</option>
+								<option style="color: purple;">Purple</option>
+							</select>
+						</li>
+					</ul>
+				</div>
+				
+				
+				<div id="solution_controls">
+					<div class="small_header">Solution/Hints:</div>
+					<ul>
+						<li>
+							<input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
+							<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label>
+						</li><li>
+							<input type="button" name="get_hint" id="get_hint" value="Hint (3)" title="Give a hint for the selected cell. There are three hints remaining." onclick="getHint();" />
+						</li>
+					</ul>
+				</div>
+
+			</form>
+		</div>
+	</body>
+</html>

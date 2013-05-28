@@ -1,0 +1,142 @@
+td
+{
+	white-space: nowrap;
+}
+
+form {
+	margin: 0px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 10px 0px;
+}
+
+#grid_table {
+	border-collapse: collapse;
+	border-spacing: 0px;
+	float: left;
+	height: 551px;
+	width: 536px;
+}
+
+#controls {
+	border-style: solid;
+	border-width: 2px;
+	float: left;
+	margin-left: 10px;
+	width: 300px;
+}
+
+#solving_status {
+	cursor: help;
+}
+
+#solution_controls {
+	display: none;
+}
+
+#guessing_tools {
+	display: none;
+}
+
+.cell {
+	border-bottom-style: none;
+	border-color: black;
+	border-right-style: none;
+	border-style: dotted;
+	border-width: 1px;
+	
+	font-family: Arial, sans-serif;
+	font-size: 24pt;
+	font-weight: bold;
+	height: 42px;
+	text-align: center;
+	vertical-align: middle;
+	width: 56px;
+}
+
+.cell input {
+	font-family: Arial, sans-serif;
+	font-size: 22pt;
+	font-weight: bold;
+	height: 36px;
+	text-align: center;
+	width: 52px;
+}
+
+.cell_highlighted {
+	background-color: #CCFFCC;
+}
+
+.cell_highlighted input {
+	background-color: #CCFFCC;
+	border-color: silver;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.cell_hint {
+	font-style: italic;
+	color: grey;
+}
+
+.candidates {
+	border-bottom-style: none;
+	border-color: black;
+	border-right-style: none;
+	border-style: dotted;
+	border-width: 1px;
+
+	color: blue;
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	height: 19px;
+	padding-left: 2px;
+	text-align: left;
+	text-decoration: none;
+	vertical-align: bottom;
+	width: 54px;
+}
+
+.candidates_highlighted {
+	background-color: #CCFFCC;
+}
+
+.cell_duplicate input {
+	background-color: pink;
+	border-color: silver;
+	border-style: solid;
+	border-width: 1px;
+	color: red;
+}
+
+.small_header {
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.highlight_button {
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 1px 4px;
+}
+
+.blank_cell_highlight_red input {
+	color: red;
+}
+
+.blank_cell_highlight_blue input {
+	color: blue;
+}
+
+.blank_cell_highlight_green input {
+	color: green;
+}
+
+.blank_cell_highlight_purple input {
+	color: purple;
+}
