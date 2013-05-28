@@ -81,12 +81,12 @@ function inputOnKeyDown(e) {
 							if (currentCell.neighbors[i].value === 0) {
 								// currentCell.neighbors[i].candidates.remove(currentCell.value);
 								currentCell.neighbors[i].pencilmarks[currentCell.value - 1] = false;
-								currentCell.neighbors[i].candidatesElement.innerText = currentCell.neighbors[i].pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
-								// currentCell.neighbors[i].candidatesElement.innerText = currentCell.neighbors[i].candidates.join("");
+								currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+								// currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].candidates.join("");
 							}
 						}
 					}
-					currentCell.candidatesElement.innerText = currentCell.value;
+					currentCell.candidatesElement.innerHTML = currentCell.value;
 				}
 			} else {
 				// 0-9 || numpad 0-9
@@ -100,7 +100,7 @@ function inputOnKeyDown(e) {
 					if (currentCell.value === 0) {
 						currentCell.pencilmarks[digit - 1] = !currentCell.pencilmarks[digit - 1];
 						
-						currentCell.candidatesElement.innerText = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+						currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 					}
 				}
 			}	
@@ -135,7 +135,7 @@ function updatePencilmarks() {
 	
 	// if (! cells.showingCandidates) {
 		// for (var i = 0; i < 81; i++) {
-			// cells[i].candidatesElement.innerText = "";
+			// cells[i].candidatesElement.innerHTML = "";
 		// }
 	// } else {
 	
@@ -156,8 +156,8 @@ function updatePencilmarks() {
 			currentCell.pencilmarks = [false, false, false, false, false, false, false, false, false];
 			currentCell.pencilmarks[currentCell.value - 1] = true;
 		}
-		// currentCell.candidatesElement.innerText = currentCell.candidates.join("");
-		currentCell.candidatesElement.innerText = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+		// currentCell.candidatesElement.innerHTML = currentCell.candidates.join("");
+		currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 	}
 	// }
 }
@@ -170,12 +170,12 @@ function clearPencilmarks() {
 		
 		if (currentCell.value === 0) {
 			currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
-			currentCell.candidatesElement.innerText = "123456789";
+			currentCell.candidatesElement.innerHTML = "123456789";
 			
 		} else {
 			currentCell.pencilmarks = [false, false, false, false, false, false, false, false, false];
 			currentCell.pencilmarks[currentCell.value - 1] = true;
-			currentCell.candidatesElement.innerText = currentCell.value + "";
+			currentCell.candidatesElement.innerHTML = currentCell.value + "";
 		}
 
 	}
@@ -221,7 +221,7 @@ function clearCells() {
 		// currentCell.element.classList.remove("cell_duplicate");
 		// currentCell.candidatesElement.classList.remove("candidates_highlighted");
 		// currentCell.element.firstChild.value = "";
-		// currentCell.candidatesElement.innerText = "123456789";
+		// currentCell.candidatesElement.innerHTML = "123456789";
 	// }
 }
 
@@ -249,10 +249,10 @@ function pastePuzzle() {
 			
 			if (currentCell.value !== 0) {
 				currentCell.element.firstChild.value = currentCell.value;
-				currentCell.candidatesElement.innerText = currentCell.value + "";
+				currentCell.candidatesElement.innerHTML = currentCell.value + "";
 			} else {
 				currentCell.element.firstChild.value = "";
-				currentCell.candidatesElement.innerText = "123456789";
+				currentCell.candidatesElement.innerHTML = "123456789";
 			}
 		}
 	}
@@ -302,7 +302,7 @@ function submitGivens() {
 	} else {
 
 		document.getElementById("submit_givens").style.display = "none";
-		document.getElementById("solving_status").innerText = "Solving puzzle.";
+		document.getElementById("solving_status").innerHTML = "Solving puzzle.";
 		document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
 		document.getElementById("solution_controls").style.display = "block";
 		document.getElementById("guessing_tools").style.display = "block";
@@ -311,7 +311,7 @@ function submitGivens() {
 			currentCell = cells[i];
 			
 			if (currentCell.value !== 0) {
-				currentCell.element.innerText = currentCell.value;	
+				currentCell.element.innerHTML = currentCell.value;	
 			}
 			
 			currentCell.solution = parseInt(cells.solution[i]);
@@ -359,9 +359,9 @@ function getHint() {
 	
 	if (cells.hints > 0 && currentCell.element.children.length > 0) {
 		currentCell.value = currentCell.solution;
-		currentCell.candidatesElement.innerText = currentCell.value + "";
+		currentCell.candidatesElement.innerHTML = currentCell.value + "";
 		currentCell.setValue(currentCell.value);
-		currentCell.element.innerText = currentCell.value;
+		currentCell.element.innerHTML = currentCell.value;
 		currentCell.element.classList.add("cell_hint");
 		showDuplicates();
 		
@@ -550,7 +550,7 @@ window.onload = function() {
 			currentInput.id = "cell" + currentCell.index + "_input";
 			currentInput.onkeydown = inputOnKeyDown;
 			currentInput.onfocus = inputOnFocus;
-			// currentCell.candidatesElement.innerText = "123456789";
+			// currentCell.candidatesElement.innerHTML = "123456789";
 			
 			if (row === 0 || row === 3 || row === 6) {
 				currentCell.element.style.borderTopStyle = "solid";
@@ -652,7 +652,7 @@ window.onload = function() {
 	// currentRow.innerHTML += "<td>4</td>";
 	
 	// cells[1].className = "cell";
-	// cells[0].innerText = "3";
+	// cells[0].innerHTML = "3";
 	
 	
 	// var element = document.createElement(tagName);
