@@ -213,26 +213,20 @@ function clearCells() {
 }
 
 function pastePuzzle() {
-	var values = prompt("Enter a sudoku puzzle using zeros for empty cells.\nNon-numeric characters are ignored.");
-	
-	if (!values) {
-		return;
-	}
-	
-	while (values && !values.match(/^[0-9]+$/)) {
-		values = values.replace(/[^0-9]+/, "");
-	
-	}
+	var values = window.prompt("Enter a sudoku puzzle using zeros for empty cells.\nNon-numeric characters are ignored.");
+		
+	values = values.replace(/[^0-9]/g, "");
 	
 	if (values.length !== 81) {
-		return
+		window.alert("Invalid input");
+		return;
 	}
 	
 	for (var i = 0; i < 81; i++) {
 		var currentCell = cells[i];
 		
 		if (currentCell.element.children.length > 0) {
-			currentCell.setValue(parseInt(values[i]));
+			currentCell.setValue(parseInt(values.charAt(i)));
 			
 			if (currentCell.value !== 0) {
 				currentCell.element.firstChild.value = currentCell.value;
@@ -290,7 +284,7 @@ function submitGivens() {
 
 		document.getElementById("submit_givens").style.display = "none";
 		document.getElementById("paste_puzzle").style.display = "none";
-		document.getElementById("solving_status").innerHTML = "Solving puzzle.";
+		document.getElementById("solving_status").innerHTML = "Solving puzzle...";
 		document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
 		document.getElementById("solution_controls").style.display = "block";
 		document.getElementById("guessing_tools").style.display = "block";
