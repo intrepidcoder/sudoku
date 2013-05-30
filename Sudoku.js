@@ -2,7 +2,7 @@ var cells = [];
 
 function inputOnKeyDown(e) {
 	var code = e.keyCode;
-	
+
 	switch (code) {
 		case 9: // tab
 		case 27: // escape
@@ -10,7 +10,7 @@ function inputOnKeyDown(e) {
 		case 34: // page down
 			return true;
 		break;
-			
+
 		case 37: // left
 			if (this.index === 0) {
 				if (document.getElementById("cell80_input")) {
@@ -22,7 +22,7 @@ function inputOnKeyDown(e) {
 				}
 			}
 		break;
-		
+
 		case 38: // up
 			if (this.index < 9) {
 				if (document.getElementById("cell" + (this.index + 72) + "_input")) {
@@ -34,21 +34,21 @@ function inputOnKeyDown(e) {
 				}
 			}
 		break;
-		
+
 		case 39: // right
 			if (this.index === 80) {
 				if (document.getElementById("cell0_input")) {
 					document.getElementById("cell0_input").focus();
-				}				
+				}
 			} else {
 				if (document.getElementById("cell" + (this.index + 1) + "_input")) {
 					document.getElementById("cell" + (this.index + 1) + "_input").focus();
 				}
 			}
 		break;
-		
+
 		case 13: // enter
-		case 40: // bottom
+		case 40: // down
 			if (this.index > 71) {
 				if (document.getElementById("cell" + (this.index - 72) + "_input")) {
 					document.getElementById("cell" + (this.index - 72) + "_input").focus();
@@ -59,43 +59,46 @@ function inputOnKeyDown(e) {
 				}
 			}
 		break;
-			
+
 		// 65-90 a-z
 		// 48-57 0-9
 		// 97-105 numpad 0-9
-		
+
 		default:
-			
+
 			// function keys
-			if (code >= 112 && code <= 123) { 
+			if (code >= 112 && code <= 123) {
 				return true;
 			} else if (document.getElementById("write_mode_values").checked) {
-			
+
 				// backspace || delete
-				if (code === 8 || code === 46) { 
+				if (code === 8 || code === 46) {
+					var currentCell = cells[this.index];
+
 					this.value = "";
-					cells[this.index].setValue(0);
+					currentCell.setValue(0);
+					currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 					showDuplicates();
-				
-				} 
-				
+
+				}
+
 				// 0-9 || numpad 0-9
 				else if ((code > 48 && code <= 57) || (code > 96 && code <= 105)) {
 					var digit = code - 48;
-					
+
 					if (digit > 9) digit = code - 96; // Fix offset for numpad.
-					
+
 					this.value = digit;
 					var currentCell = cells[this.index];
 					currentCell.setValue(digit);
 					showDuplicates();
-					
+
 					// console.log(currentCell.neighbors);
-					
+
 					if (document.getElementById("auto_pencilmarks").checked) {
 						for (var i = 0; i < 20; i++) {
 							if (currentCell.neighbors[i].value === 0) {
-								
+
 								currentCell.neighbors[i].pencilmarks[currentCell.value - 1] = false;
 								currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 							}
@@ -107,21 +110,21 @@ function inputOnKeyDown(e) {
 				// 0-9 || numpad 0-9
 				if ((code > 48 && code <= 57) || (code > 96 && code <= 105)) {
 					var digit = code - 48;
-					
+
 					if (digit > 9) digit = code - 96; // Fix offset for numpad.
-					
+
 					var currentCell = cells[this.index];
-					
+
 					if (currentCell.value === 0) {
 						currentCell.pencilmarks[digit - 1] = !currentCell.pencilmarks[digit - 1];
-						
+
 						currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
 					}
 				}
-			}	
+			}
 		break;
 	}
-	
+
 	return false;
 }
 
@@ -131,17 +134,17 @@ function inputOnFocus() {
 
 function updatePencilmarks() {
 	var currentCell;
-	
+
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-		
+
 		if (currentCell.value === 0) {
 			currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
-			
+
 			for (var k = 0; k < 20; k++) {
 				currentCell.pencilmarks[currentCell.neighbors[k].value - 1] = false;
 			}
-			
+
 		} else {
 			currentCell.pencilmarks = [false, false, false, false, false, false, false, false, false];
 			currentCell.pencilmarks[currentCell.value - 1] = true;
@@ -152,17 +155,15 @@ function updatePencilmarks() {
 
 function clearPencilmarks() {
 	var currentCell;
-	
+
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-		
+		currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
+
 		if (currentCell.value === 0) {
-			currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
 			currentCell.candidatesElement.innerHTML = "123456789";
-			
+
 		} else {
-			currentCell.pencilmarks = [false, false, false, false, false, false, false, false, false];
-			currentCell.pencilmarks[currentCell.value - 1] = true;
 			currentCell.candidatesElement.innerHTML = currentCell.value + "";
 		}
 
@@ -171,20 +172,20 @@ function clearPencilmarks() {
 
 function showDuplicates() {
 	var currentCell;
-	
+
 	if (document.getElementById("show_duplicates").checked) {
-	
+
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];
 			currentCell.element.classList.remove("cell_duplicate");
-			
+
 			if (currentCell.value !== 0) {
 				for (var k = 0; k < 20; k++) {
 					if (currentCell.value === currentCell.neighbors[k].value) {
 						currentCell.element.classList.add("cell_duplicate");
 					}
 				}
-				
+
 			}
 		}
 	} else {
@@ -198,12 +199,12 @@ function clearCells() {
 	if (!window.confirm("Are you sure you want to clear this sudoku puzzle?")) return;
 	window.location.reload();
 	// var currentCell;
-	
+
 	// for (var i = 0; i < 81; i++) {
 		// currentCell = cells[i];
 		// currentCell.setValue(0);
 		// currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
-		
+
 		// currentCell.element.classList.remove("cell_highlighted");
 		// currentCell.element.classList.remove("cell_duplicate");
 		// currentCell.candidatesElement.classList.remove("candidates_highlighted");
@@ -214,30 +215,29 @@ function clearCells() {
 
 function pastePuzzle() {
 	var values = window.prompt("Enter a sudoku puzzle using zeros for empty cells.\nNon-numeric characters are ignored.");
-		
+
 	values = values.replace(/[^0-9]/g, "");
-	
+
 	if (values.length !== 81) {
 		window.alert("Invalid input");
 		return;
 	}
-	
+
 	for (var i = 0; i < 81; i++) {
 		var currentCell = cells[i];
-		
+
 		if (currentCell.element.children.length > 0) {
 			currentCell.setValue(parseInt(values.charAt(i)));
-			
+
 			if (currentCell.value !== 0) {
 				currentCell.element.firstChild.value = currentCell.value;
-				currentCell.candidatesElement.innerHTML = currentCell.value + "";
 			} else {
 				currentCell.element.firstChild.value = "";
-				currentCell.candidatesElement.innerHTML = "123456789";
 			}
 		}
 	}
-	
+
+	clearPencilmarks();
 	highlight(0);
 	showDuplicates();
 }
@@ -247,20 +247,20 @@ function highlight(value) {
 		for (var i = 0; i < 81; i++) {
 			cells[i].element.classList.remove("cell_highlighted");
 			cells[i].candidatesElement.classList.remove("candidates_highlighted");
-			
-		}	
+
+		}
 	} else {
 		for (var i = 0; i < 81; i++) {
 			var currentCell = cells[i];
-			
+
 			if (currentCell.value !== 0 || !currentCell.pencilmarks[value - 1]) {
 				currentCell.candidatesElement.classList.add("candidates_highlighted");
 				currentCell.element.classList.add("cell_highlighted");
 			} else {
 				currentCell.candidatesElement.classList.remove("candidates_highlighted");
-				currentCell.element.classList.remove("cell_highlighted");			
+				currentCell.element.classList.remove("cell_highlighted");
 			}
-			
+
 		}
 	}
 }
@@ -268,16 +268,16 @@ function highlight(value) {
 function submitGivens() {
 	var currentCell;
 	var values = "";
-	
+
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-		
+
 		values += currentCell.value;
-		
+
 	}
-	
+
 	var puzzle = new Puzzle(values);
-	
+
 	if (!puzzle.hasSolution()) {
 		alert("There is no solution for the inputted clues.");
 	} else {
@@ -291,45 +291,45 @@ function submitGivens() {
 		cells.solution = puzzle.toString();
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];
-			
+
 			if (currentCell.value !== 0) {
-				currentCell.element.innerHTML = currentCell.value;	
+				currentCell.element.innerHTML = currentCell.value;
 			}
-			
+
 			currentCell.solution = parseInt(cells.solution[i]);
 		}
 	}
 }
 
 function showSolution() {
-	
+
 	var currentCell;
-	
+
 	if (cells.solution === undefined) return;
-	
+
 	if (document.getElementById("show_solution").checked) {
 		if (!window.confirm("Are you sure you want to show the solution?")) {
 			document.getElementById("show_solution").checked = false;
 			return;
 		}
-		
+
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];
-			
+
 			if (currentCell.element.children.length > 0) {
 				currentCell.element.firstChild.value = currentCell.solution;
 				currentCell.element.firstChild.disabled = true;
 			}
-			
-			
+
+
 		}
 	} else {
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];
-			
+
 			if (currentCell.element.children.length > 0) {
 				currentCell.element.firstChild.disabled = false;
-				
+
 				currentCell.element.firstChild.value = currentCell.value === 0 ? "" : currentCell.value;
 			}
 		}
@@ -337,8 +337,12 @@ function showSolution() {
 }
 
 function getHint() {
+	if (cells.lastSelectedCell === null) {
+		return;
+	}
+
 	var currentCell = cells[cells.lastSelectedCell];
-	
+
 	if (cells.hints > 0 && currentCell.element.children.length > 0) {
 		currentCell.value = currentCell.solution;
 		currentCell.candidatesElement.innerHTML = currentCell.value + "";
@@ -346,65 +350,74 @@ function getHint() {
 		currentCell.element.innerHTML = currentCell.value;
 		currentCell.element.classList.add("cell_hint");
 		showDuplicates();
-		
+
 		cells.hints--;
 		document.getElementById("get_hint").value = "Hint (" + cells.hints + ")";
-		
+
 		if (cells.hints === 2) {
 			document.getElementById("get_hint").title = "Give a hint for the selected cell. There are two hints remaining.";
 		} else if (cells.hints === 1) {
 			document.getElementById("get_hint").title = "Give a hint for the selected cell. There is one hint remaining.";
-		
+
 		} else if (cells.hints <= 0) {
 			document.getElementById("get_hint").disabled = true;
 			document.getElementById("get_hint").title = "There are no more hints remaining.";
 		}
-		
+
 	}
 }
 
 function setBlankCells(color) {
 	var currentCell;
-	
+
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-		
+
 		if (currentCell.value === 0) {
 			currentCell.element.classList.remove("blank_cell_highlight_red");
 			currentCell.element.classList.remove("blank_cell_highlight_blue");
 			currentCell.element.classList.remove("blank_cell_highlight_green");
 			currentCell.element.classList.remove("blank_cell_highlight_purple");
-			
+
 			if (color !== "black") {
 				currentCell.element.classList.add("blank_cell_highlight_" + color);
 			}
 		}
-		
+
 	}
+
+	cells.blankCellColor = color;
 }
 
 function deleteColoredCells(element) {
 	var color = element.value.toLowerCase();
-	
-	if (color === "select color" || !confirm("Are you sure you want to delete all cells highlighted "+color+"?")) {
+	element.value = "Select Color";
+
+	if (color === "select color" || !confirm("Are you sure you want to delete all cells marked "+color+"?")) {
 		return;
 	}
-	
-	element.value = "Select Color";
+
 	var currentCell;
-	
+
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-		
+
 		if (currentCell.value !== 0)
 		console.log(currentCell.element.classList.contains("blank_cell_highlight_" + color));
-		
+
 		if (currentCell.value !== 0 && currentCell.element.classList.contains("blank_cell_highlight_" + color)) {
 			currentCell.element.firstChild.value = "";
 			currentCell.setValue(0);
+			currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+
+			currentCell.element.classList.remove("blank_cell_highlight_" + color);
+
+			if (color !== "black") {
+				currentCell.element.classList.add("blank_cell_highlight_" + cells.blankCellColor);
+			}
 		}
 	}
-	
+
 	showDuplicates();
 }
 
@@ -414,7 +427,7 @@ window.onload = function() {
 		this.value = 0;
 		this.element = undefined;
 		this.candidatesElement = undefined;
-		
+
 		this.neighbors = [];
 		this.rowNeighbors = [];
 		this.columnNeighbors = [];
@@ -493,28 +506,28 @@ window.onload = function() {
 				this.candidates = [value];
 			}
 		}
-		
+
 		this.toString = function toString() {
 			return this.value + "";
 		};
-		
+
 		this.setValue(0);
 	};
-	
+
 	var tabIndex = 1;
-	
+
 	var grid_table = document.getElementById("grid_table");
 	var currentRow, currentCell, currentInput;
 	var currentCandidateRow;
-	
+
 	for (var row = 0; row < 9; row++) {
 		currentRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
 		currentCandidateRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
-		
+
 		for (var col = 0; col < 9; col++) {
 			currentCell = new Cell(row * 9 + col);
 			cells[row * 9 + col] = currentCell;
-			
+
 			currentCell.element = currentRow.appendChild(document.createElement("td"));
 			currentCell.element.classList.add("cell");
 			currentCell.candidatesElement = currentCandidateRow.appendChild(document.createElement("td"));
@@ -524,20 +537,20 @@ window.onload = function() {
 			currentInput.type = "text";
 			currentInput.tabIndex = tabIndex;
 			tabIndex++;
-			
+
 			currentInput.index = currentCell.index;
 			currentInput.id = "cell" + currentCell.index + "_input";
 			currentInput.onkeydown = inputOnKeyDown;
 			currentInput.onfocus = inputOnFocus;
-			
+
 			if (row === 0 || row === 3 || row === 6) {
 				currentCell.element.style.borderTopStyle = "solid";
 				currentCell.element.style.borderTopWidth = "2px";
 			} else if (row === 8) {
 				currentCell.candidatesElement.style.borderBottomStyle = "solid";
-				currentCell.candidatesElement.style.borderBottomWidth = "2px";			
+				currentCell.candidatesElement.style.borderBottomWidth = "2px";
 			}
-			
+
 			if (col === 0 || col === 3 || col === 6) {
 				currentCell.element.style.borderLeftStyle = "solid";
 				currentCell.candidatesElement.style.borderLeftStyle = "solid";
@@ -549,12 +562,13 @@ window.onload = function() {
 				currentCell.element.style.borderRightWidth = "2px";
 				currentCell.candidatesElement.style.borderRightWidth = "2px";
 			}
-			
+
 		}
 	}
-	
-	cells.lastSelectedCell = 0;
+
+	cells.lastSelectedCell = null;
 	cells.hints = 3;
+	cells.blankCellColor = "black";
 	updatePencilmarks();
 
 };
