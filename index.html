@@ -81,8 +81,8 @@
 					<div class="small_header">Guessing tools:</div>
 					<ul>
 						<li>
-							Set blank cells:
-							<select title="Set the blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
+							Mark blank cells:
+							<select title="Mark all blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
 								<option selected="selected" style="color: black;">Black</option>
 								<option style="color: blue;">Blue</option>
 								<option style="color: red;">Red</option>
@@ -90,8 +90,8 @@
 								<option style="color: purple;">Purple</option>
 							</select>
 						</li><li>
-							Delete cells highlighted:
-							<select title="Delete all cells of a certain color." onchange="deleteColoredCells(this);">
+							Delete cells marked:
+							<select title="Delete all cells marked a certain color." onchange="deleteColoredCells(this);">
 								<option selected="selected">Select Color</option>
 								<option style="color: blue;">Blue</option>
 								<option style="color: red;">Red</option>
