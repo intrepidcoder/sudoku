@@ -3,7 +3,7 @@ This is a simple web page that provides tools to help solve sudoku puzzles.
 
 To access the web page, go to http://delta42.github.io/sudoku.
 
-Note: This web page does not save any entered clues or values. Refreshing or navigating away from it will reset the page to its initial state without warning.
+Note: This web page does not save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.
 
 ##Features:
 * Pencil marks
@@ -14,13 +14,13 @@ Note: This web page does not save any entered clues or values. Refreshing or nav
 * Mark guesses for quick removal
 
 ##Instructions:
-1. To begin, __enter some clues__. Find a sudoku puzzle and input its clues using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter clues using the Paste puzzle button.
-2. __Submit the clues__ by clicking the Submit clues button. This sets the clues as read-only and enables several features.
+1. To begin, __enter some values__. Find a sudoku puzzle and input its values using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter values using the Paste puzzle link.
+2. __Submit the values__ by clicking the begin solving link. This sets the values as read-only and enables several features.
 3. __Solve the puzzle__ using pencil marks, cell highlighting, guesses, hints, and if all else fails, show solution.
 
-##Button descriptions:
-* __Clear cells__: Deletes all clues and values, resets pencil marks, and removes all highlighting. This resets the page to its initial state.
-* __Submit clues__: Sets the entered values as read-only clues and submits them to the puzzle solver. Once the clues have been submitted, they cannot be changed. This generates a solution for the clues and as a result, enables hints, show solution, and guess removal. 
+##Button/link descriptions:
+* __Clear cells__: Deletes all values, resets pencil marks, and removes all highlighting. This resets the page to its initial state.
+* __Begin solving__: Sets the entered values as read-only and submits them to the puzzle solver. Once the values have been submitted, they cannot be changed. This generates a solution for the values and enables the solving features.
 * __Paste puzzle__: Allows values to be inputted from the clipboard. This overwrites existing values. Zeros can be used as placeholders for empty cells. Characters other than 0-9 are ignored. There must be exactly 81 numbers for this to work properly.
 * __1-9__: Highlights all cells that do not have a pencil mark of 1-9 a pale green color. If the pencil marks have been updated, this can be used to easily determine which cells do not have a value of 1-9. Does not update automatically.
 * __Clear__: Removes all cell highlighting.
