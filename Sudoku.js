@@ -279,15 +279,17 @@ function submitGivens() {
 	var puzzle = new Puzzle(values);
 
 	if (!puzzle.hasSolution()) {
-		alert("There is no solution for the inputted clues.");
+		alert("There is no solution for the inputted values.");
 	} else {
 
-		document.getElementById("submit_givens").style.display = "none";
-		document.getElementById("paste_puzzle").style.display = "none";
-		document.getElementById("solving_status").innerHTML = "Solving puzzle...";
-		document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
-		document.getElementById("solution_controls").style.display = "block";
-		document.getElementById("guessing_tools").style.display = "block";
+		document.getElementById("top_bar").style.display = "none";
+		// document.getElementById("submit_givens").style.display = "none";
+		// document.getElementById("paste_puzzle").style.display = "none";
+		// document.getElementById("solving_status").innerHTML = "Solving puzzle...";
+		// document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
+		document.getElementById("controls").style.display = "block";
+		document.getElementById("grid_table").style.marginTop = "8px";
+		
 		cells.solution = puzzle.toString();
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];

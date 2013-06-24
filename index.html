@@ -7,31 +7,33 @@
 	</head>
 
 	<body>
-		<!-- <textarea id="hi">hi</textarea> -->
+		<div id="top_bar">
+			<ul>
+				<li>To begin, find a sudoku puzzle and input its values below. When finished, <a href="javascript:void(0);" onclick="submitGivens();">begin solving</a>.</li>
+				<li style="float: right;"><a href="help.html" target="_blank">Help/About</a></li>
+				<li style="float: right;" id="paste_puzzle"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li>
+			</ul>
+		</div>
+		
 		<table id="grid_table">
-			<tbody>
-				<!-- <tr>
-					<td class="cell cell_top cell_left">1</td>
-					<td class="cell"><input type="text" value="1" /></td>
-				</tr>
-				<tr>
-					<td class="candidates">123456789</td>
-					<td class="candidates">-</td>
-				</tr> -->
-			</tbody>
+			<tbody></tbody>
 		</table>
+		
 		<div id="controls">
 			<form name="controls_form">
-				<div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div>
-				<ul>
+				<!-- <div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div> -->
+				<div class="small_header"><a href="help.html" target="_blank">Help/About</a></div>
+				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
+				<!-- <ul>
 					<li>
-						<input type="button" name="update_pencilmarks" value="Clear cells" title="Delete all clues and values, reset pencil marks, and remove highlighting." onclick="clearCells();" />
+						<input type="button" name="clear_cells" value="Clear cells" title="Delete all clues and values, reset pencil marks, and remove highlighting." onclick="clearCells();" />
 					</li><li>
 						<input type="button" name="submit_givens" id="submit_givens" value="Submit clues" title="Set all filled cells as read-only to enable guessing and hints." onclick="submitGivens();" />
 					</li><li>
 						<input type="button" name="paste_puzzle" id="paste_puzzle" value="Paste puzzle" title="Paste values to place into the puzzle. Note: this overwrites existing values." onclick="pastePuzzle();" />
 					</li>
-				</ul>
+				</ul> -->
+				
 				<div class="small_header">Cell Highlighting:</div>
 				<ul>
 					<li>
@@ -50,9 +52,6 @@
 				
 				<div class="small_header">Pencil Marks:</div>
 				<ul>
-					<!-- <li>
-						<input type="button" value="Hide candidates" onclick="toggleCandidateVisibility(this);" title="Hide possible cell values." />
-					</li> -->
 					<li>
 						<input type="radio" name="write_mode" value="values" id="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." checked="checked" selected="selected" />
 						<label for="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." >Enter values.</label>
@@ -77,43 +76,38 @@
 					<li></li>
 				</ul>
 				
-				<div id="guessing_tools">
-					<div class="small_header">Guessing tools:</div>
-					<ul>
-						<li>
-							Mark blank cells:
-							<select title="Mark all blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
-								<option selected="selected" style="color: black;">Black</option>
-								<option style="color: blue;">Blue</option>
-								<option style="color: red;">Red</option>
-								<option style="color: green;">Green</option>
-								<option style="color: purple;">Purple</option>
-							</select>
-						</li><li>
-							Delete cells marked:
-							<select title="Delete all cells marked a certain color." onchange="deleteColoredCells(this);">
-								<option selected="selected">Select Color</option>
-								<option style="color: blue;">Blue</option>
-								<option style="color: red;">Red</option>
-								<option style="color: green;">Green</option>
-								<option style="color: purple;">Purple</option>
-							</select>
-						</li>
-					</ul>
-				</div>
+				<div class="small_header">Guessing tools:</div>
+				<ul>
+					<li>
+						Mark blank cells:
+						<select title="Mark all blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
+							<option selected="selected" style="color: black;">Black</option>
+							<option style="color: blue;">Blue</option>
+							<option style="color: red;">Red</option>
+							<option style="color: green;">Green</option>
+							<option style="color: purple;">Purple</option>
+						</select>
+					</li><li>
+						Delete cells marked:
+						<select title="Delete all cells marked a certain color." onchange="deleteColoredCells(this);">
+							<option selected="selected">Select Color</option>
+							<option style="color: blue;">Blue</option>
+							<option style="color: red;">Red</option>
+							<option style="color: green;">Green</option>
+							<option style="color: purple;">Purple</option>
+						</select>
+					</li>
+				</ul>
 				
-				
-				<div id="solution_controls">
-					<div class="small_header">Solution/Hints:</div>
-					<ul>
-						<li>
-							<input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
-							<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label>
-						</li><li>
-							<input type="button" name="get_hint" id="get_hint" value="Hint (3)" title="Give a hint for the selected cell. There are three hints remaining." onclick="getHint();" />
-						</li>
+				<div class="small_header">Solution/Hints:</div>
+				<ul>
+					<li>
+						<input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
+						<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label>
+					</li><li>
+						<input type="button" name="get_hint" id="get_hint" value="Hint (3)" title="Give a hint for the selected cell. There are three hints remaining." onclick="getHint();" />
+					</li>
 					</ul>
-				</div>
 
 			</form>
 		</div>

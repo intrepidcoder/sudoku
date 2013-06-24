@@ -1,3 +1,7 @@
+body {
+	margin: 0px;
+}
+
 td
 {
 	white-space: nowrap;
@@ -9,7 +13,34 @@ form {
 
 ul {
 	list-style-type: none;
-	margin: 10px 0px;
+}
+
+a:visited {
+	color: blue;
+}
+
+a:active {
+	color: red;
+}
+
+#top_bar {
+	background-color: #FFA;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 100%;
+}
+
+#top_bar ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+#top_bar li {
+	float: left;
+	margin: 3px 10px;
 }
 
 #grid_table {
@@ -17,27 +48,25 @@ ul {
 	border-spacing: 0px;
 	float: left;
 	height: 551px;
+	margin: 22px 0px 0px 8px;
 	width: 536px;
 }
 
 #controls {
 	border-style: solid;
 	border-width: 2px;
+	display: none;
 	float: left;
-	margin-left: 10px;
-	width: 300px;
+	margin: 8px 0px 0px 8px;
+	width: 350px;
+}
+
+#controls ul {
+	margin: 10px 0px;
 }
 
 #solving_status {
 	cursor: help;
-}
-
-#solution_controls {
-	display: none;
-}
-
-#guessing_tools {
-	display: none;
 }
 
 .cell {
