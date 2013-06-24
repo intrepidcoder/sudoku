@@ -1,168 +1,169 @@
 <html>
-<head>
-	<style type="text/css">
-		body {
-			margin: 25px;
-		}
-		
-		h1 {
-			font-size: 2.5em;
-			margin-top: 0px;
-			margin-right: 0px;
-			margin-bottom: 15px;
-			margin-left: 0px;
-			padding: 0px;
-			font-weight: bold;
-			cursor: text;
-			position: relative;
-			border-bottom-width: 1px;
-			border-bottom-style: solid;
-			border-bottom-color: rgb(221, 221, 221);
-			color: rgb(51, 51, 51);
-			font-family: Helvetica, arial, freesans, clean, sans-serif;
-			font-style: normal;
-			font-variant: normal;
-			letter-spacing: normal;
-			orphans: auto;
-			text-align: start;
-			text-indent: 0px;
-			text-transform: none;
-			white-space: normal;
-			widows: auto;
-			word-spacing: 0px;
-			-webkit-text-stroke-width: 0px;
-		}
-		
-		h2 {
-			margin: 1em 0px 15px;
-			line-height: 1.7;
-			font-size: 2em;
-			padding: 0px;
-			font-weight: bold;
-			cursor: text;
-			position: relative;
-			border-bottom-width: 1px;
-			border-bottom-style: solid;
-			border-bottom-color: rgb(238, 238, 238);
-			color: rgb(51, 51, 51);
-			font-family: Helvetica, arial, freesans, clean, sans-serif;
-			font-style: normal;
-			font-variant: normal;
-			letter-spacing: normal;
-			orphans: auto;
-			text-align: start;
-			text-indent: 0px;
-			text-transform: none;
-			white-space: normal;
-			widows: auto;
-			word-spacing: 0px;
-			-webkit-text-stroke-width: 0px;
-		}
-		
-		p {
-			margin: 15px 0px;
-			color: rgb(51, 51, 51);
-			font-family: Helvetica, arial, freesans, clean, sans-serif;
-			font-size: 15px;
-			font-style: normal;
-			font-variant: normal;
-			font-weight: normal;
-			letter-spacing: normal;
-			line-height: 25px;
-			orphans: auto;
-			text-align: start;
-			text-indent: 0px;
-			text-transform: none;
-			white-space: normal;
-			widows: auto;
-			word-spacing: 0px;
-			-webkit-text-stroke-width: 0px;
-		}
-		
-		ul {
-			padding: 0px 0px 0px 30px;
-			margin: 15px 0px;
-			color: rgb(51, 51, 51);
-			font-family: Helvetica, arial, freesans, clean, sans-serif;
-			font-size: 15px;
-			font-style: normal;
-			font-variant: normal;
-			font-weight: normal;
-			letter-spacing: normal;
-			line-height: 25px;
-			orphans: auto;
-			text-align: start;
-			text-indent: 0px;
-			text-transform: none;
-			white-space: normal;
-			widows: auto;
-			word-spacing: 0px;
-			-webkit-text-stroke-width: 0px;
-		}
-		
-		ol {
-			padding: 0px 0px 0px 30px;
-			margin: 15px 0px;
-			color: rgb(51, 51, 51);
-			font-family: Helvetica, arial, freesans, clean, sans-serif;
-			font-size: 15px;
-			font-style: normal;
-			font-variant: normal;
-			font-weight: normal;
-			letter-spacing: normal;
-			line-height: 25px;
-			orphans: auto;
-			text-align: start;
-			text-indent: 0px;
-			text-transform: none;
-			white-space: normal;
-			widows: auto;
-			word-spacing: 0px;
-			-webkit-text-stroke-width: 0px;
-		}
-		
-		strong {
-			font-weight: bold;
-		}
-	</style>
-</head>
-<body>
-	<h1>sudoku</h1>
-	<p>This is a simple web page that provides tools to help solve sudoku puzzles.</p>
-	<p>To access the web page, go to <a href="http://delta42.github.io/sudoku" style="color: rgb(65, 131, 196); text-decoration: none;">http://delta42.github.io/sudoku</a>.</p>
-	<p>Note: This web page does not save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.</p>
-	<h2>Features:</h2>
-	<ul>
-		<li>Pencil marks</li>
-		<li>Cell highlighting based on pencil marks</li>
-		<li>Flag duplicate values</li>
-		<li>Show solution</li>
-		<li>Hints</li>
-		<li>Mark guesses for quick removal</li>
-	</ul>
-	<h2>Instructions:</h2>
-	<ol>
-		<li>To begin, <strong>enter some values</strong>. Find a sudoku puzzle and input its values using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter values using the Paste puzzle link..</li>
-		<li><strong>Submit the values</strong> by clicking the begin solving link. This sets the values as read-only and enables several features.</li>
-		<li><strong>Solve the puzzle</strong> using pencil marks, cell highlighting, guesses, hints, and if all else fails, show solution.</li>
-	</ol>
-	<h2>Button/link descriptions:</h2>
-	<ul>
-		<li><strong>Clear cells</strong>: Deletes all values, resets pencil marks, and removes all highlighting. This resets the page to its initial state.</li>
-		<li><strong>Begin solving</strong>: Sets the entered values as read-only and submits them to the puzzle solver. Once the values have been submitted, they cannot be changed. This generates a solution for the values and enables the solving features.</li>
-		<li><strong>Paste puzzle</strong>: Allows values to be inputted from the clipboard. This overwrites existing values. Zeros can be used as placeholders for empty cells. Characters other than 0-9 are ignored. There must be exactly 81 numbers for this to work properly.</li>
-		<li><strong>1-9</strong>: Highlights all cells that do not have a pencil mark of 1-9 a pale green color. If the pencil marks have been updated, this can be used to easily determine which cells do not have a value of 1-9. Does not update automatically.</li>
-		<li><strong>Clear</strong>: Removes all cell highlighting.</li>
-		<li><strong>Enter values</strong>: When this option is selected, typing a number in a cell changes its value.</li>
-		<li><strong>Enter pencil marks</strong>: When this option is selected, typing a number in a cell toggles the corresponding pencil mark.</li>
-		<li><strong>Automatically remove pencil marks</strong>: When this option is enabled, entering a value in a cell removes that pencil mark from all of the cell's neighbors (cells in the same row, box, or column).</li>
-		<li><strong>Update</strong>: Changes all pencil marks so that they show the possible values that each cell could have. This overwrites existing pencil marks.</li>
-		<li><strong>Reset</strong>: Adds all pencil marks to empty cells. Allows solving the puzzle without the aid of pencil marks. This overwrites existing pencil marks.</li>
-		<li><strong>Show duplicates</strong>: When this option is enabled, neighboring cells with the same value are flagged red.</li>
-		<li><strong>Mark blank cells (color)</strong>: Marks all blank cells with a certain color. Use this to make guesses so that if the guess is incorrect, all values entered afterward can be removed easily.</li>
-		<li><strong>Delete cells marked (color)</strong>: Deletes all cells that have been marked a certain color. Does not affect cells marked a different color or pencil marks.</li>
-		<li><strong>Show solution</strong>: When this option is enabled, the puzzle's solution will be shown. Does not affect cell values or pencil marks.</li>
-		<li><strong>Hint</strong>: Gives a hint for cell that was last selected, up to three hints. Hints are based on the solution.</li>
-	</ul>
-</body>
+	<head>
+		<title>Sudoku Help</title>
+		<style type="text/css">
+			body {
+				margin: 25px;
+			}
+			
+			h1 {
+				font-size: 2.5em;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 15px;
+				margin-left: 0px;
+				padding: 0px;
+				font-weight: bold;
+				cursor: text;
+				position: relative;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
+				border-bottom-color: rgb(221, 221, 221);
+				color: rgb(51, 51, 51);
+				font-family: Helvetica, arial, freesans, clean, sans-serif;
+				font-style: normal;
+				font-variant: normal;
+				letter-spacing: normal;
+				orphans: auto;
+				text-align: start;
+				text-indent: 0px;
+				text-transform: none;
+				white-space: normal;
+				widows: auto;
+				word-spacing: 0px;
+				-webkit-text-stroke-width: 0px;
+			}
+			
+			h2 {
+				margin: 1em 0px 15px;
+				line-height: 1.7;
+				font-size: 2em;
+				padding: 0px;
+				font-weight: bold;
+				cursor: text;
+				position: relative;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
+				border-bottom-color: rgb(238, 238, 238);
+				color: rgb(51, 51, 51);
+				font-family: Helvetica, arial, freesans, clean, sans-serif;
+				font-style: normal;
+				font-variant: normal;
+				letter-spacing: normal;
+				orphans: auto;
+				text-align: start;
+				text-indent: 0px;
+				text-transform: none;
+				white-space: normal;
+				widows: auto;
+				word-spacing: 0px;
+				-webkit-text-stroke-width: 0px;
+			}
+			
+			p {
+				margin: 15px 0px;
+				color: rgb(51, 51, 51);
+				font-family: Helvetica, arial, freesans, clean, sans-serif;
+				font-size: 15px;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				letter-spacing: normal;
+				line-height: 25px;
+				orphans: auto;
+				text-align: start;
+				text-indent: 0px;
+				text-transform: none;
+				white-space: normal;
+				widows: auto;
+				word-spacing: 0px;
+				-webkit-text-stroke-width: 0px;
+			}
+			
+			ul {
+				padding: 0px 0px 0px 30px;
+				margin: 15px 0px;
+				color: rgb(51, 51, 51);
+				font-family: Helvetica, arial, freesans, clean, sans-serif;
+				font-size: 15px;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				letter-spacing: normal;
+				line-height: 25px;
+				orphans: auto;
+				text-align: start;
+				text-indent: 0px;
+				text-transform: none;
+				white-space: normal;
+				widows: auto;
+				word-spacing: 0px;
+				-webkit-text-stroke-width: 0px;
+			}
+			
+			ol {
+				padding: 0px 0px 0px 30px;
+				margin: 15px 0px;
+				color: rgb(51, 51, 51);
+				font-family: Helvetica, arial, freesans, clean, sans-serif;
+				font-size: 15px;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				letter-spacing: normal;
+				line-height: 25px;
+				orphans: auto;
+				text-align: start;
+				text-indent: 0px;
+				text-transform: none;
+				white-space: normal;
+				widows: auto;
+				word-spacing: 0px;
+				-webkit-text-stroke-width: 0px;
+			}
+			
+			strong {
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>sudoku</h1>
+		<p>This is a simple web page that provides tools to help solve sudoku puzzles.</p>
+		<p>To access the web page, go to <a href="http://delta42.github.io/sudoku" style="color: rgb(65, 131, 196); text-decoration: none;">http://delta42.github.io/sudoku</a>.</p>
+		<p>Note: This web page does not save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.</p>
+		<h2>Features:</h2>
+		<ul>
+			<li>Pencil marks</li>
+			<li>Cell highlighting based on pencil marks</li>
+			<li>Flag duplicate values</li>
+			<li>Show solution</li>
+			<li>Hints</li>
+			<li>Mark guesses for quick removal</li>
+		</ul>
+		<h2>Instructions:</h2>
+		<ol>
+			<li>To begin, <strong>enter some values</strong>. Find a sudoku puzzle and input its values using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter values using the Paste puzzle link..</li>
+			<li><strong>Submit the values</strong> by clicking the begin solving link. This sets the values as read-only and enables several features.</li>
+			<li><strong>Solve the puzzle</strong> using pencil marks, cell highlighting, guesses, hints, and if all else fails, show solution.</li>
+		</ol>
+		<h2>Button/link descriptions:</h2>
+		<ul>
+			<li><strong>Clear cells</strong>: Deletes all values, resets pencil marks, and removes all highlighting. This resets the page to its initial state.</li>
+			<li><strong>Begin solving</strong>: Sets the entered values as read-only and submits them to the puzzle solver. Once the values have been submitted, they cannot be changed. This generates a solution for the values and enables the solving features.</li>
+			<li><strong>Paste puzzle</strong>: Allows values to be inputted from the clipboard. This overwrites existing values. Zeros can be used as placeholders for empty cells. Characters other than 0-9 are ignored. There must be exactly 81 numbers for this to work properly.</li>
+			<li><strong>1-9</strong>: Highlights all cells that do not have a pencil mark of 1-9 a pale green color. If the pencil marks have been updated, this can be used to easily determine which cells do not have a value of 1-9. Does not update automatically.</li>
+			<li><strong>Clear</strong>: Removes all cell highlighting.</li>
+			<li><strong>Enter values</strong>: When this option is selected, typing a number in a cell changes its value.</li>
+			<li><strong>Enter pencil marks</strong>: When this option is selected, typing a number in a cell toggles the corresponding pencil mark.</li>
+			<li><strong>Automatically remove pencil marks</strong>: When this option is enabled, entering a value in a cell removes that pencil mark from all of the cell's neighbors (cells in the same row, box, or column).</li>
+			<li><strong>Update</strong>: Changes all pencil marks so that they show the possible values that each cell could have. This overwrites existing pencil marks.</li>
+			<li><strong>Reset</strong>: Adds all pencil marks to empty cells. Allows solving the puzzle without the aid of pencil marks. This overwrites existing pencil marks.</li>
+			<li><strong>Show duplicates</strong>: When this option is enabled, neighboring cells with the same value are flagged red.</li>
+			<li><strong>Mark blank cells (color)</strong>: Marks all blank cells with a certain color. Use this to make guesses so that if the guess is incorrect, all values entered afterward can be removed easily.</li>
+			<li><strong>Delete cells marked (color)</strong>: Deletes all cells that have been marked a certain color. Does not affect cells marked a different color or pencil marks.</li>
+			<li><strong>Show solution</strong>: When this option is enabled, the puzzle's solution will be shown. Does not affect cell values or pencil marks.</li>
+			<li><strong>Hint</strong>: Gives a hint for cell that was last selected, up to three hints. Hints are based on the solution.</li>
+		</ul>
+	</body>
 </html>
