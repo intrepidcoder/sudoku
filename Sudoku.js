@@ -296,6 +296,8 @@ function submitGivens() {
 
 			if (currentCell.value !== 0) {
 				currentCell.element.innerHTML = currentCell.value;
+			} else {
+				currentCell.element.classList.add("blank_cell_highlight_black");
 			}
 
 			currentCell.solution = parseInt(cells.solution[i]);
@@ -376,14 +378,13 @@ function setBlankCells(color) {
 		currentCell = cells[i];
 
 		if (currentCell.value === 0) {
+			currentCell.element.classList.remove("blank_cell_highlight_black");
 			currentCell.element.classList.remove("blank_cell_highlight_red");
 			currentCell.element.classList.remove("blank_cell_highlight_blue");
 			currentCell.element.classList.remove("blank_cell_highlight_green");
 			currentCell.element.classList.remove("blank_cell_highlight_purple");
 
-			if (color !== "black") {
-				currentCell.element.classList.add("blank_cell_highlight_" + color);
-			}
+			currentCell.element.classList.add("blank_cell_highlight_" + color);
 		}
 
 	}
@@ -395,7 +396,7 @@ function deleteColoredCells(element) {
 	var color = element.value.toLowerCase();
 	element.value = "Select Color";
 
-	if (color === "select color" || !confirm("Are you sure you want to delete all cells marked "+color+"?")) {
+	if (color === "select color" || !confirm("Are you sure you want to delete all cells marked " + color + "?")) {
 		return;
 	}
 
@@ -404,8 +405,9 @@ function deleteColoredCells(element) {
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 
-		if (currentCell.value !== 0)
-		console.log(currentCell.element.classList.contains("blank_cell_highlight_" + color));
+		// if (currentCell.value !== 0) {
+			// console.log(currentCell.element.classList.contains("blank_cell_highlight_" + color));
+		// }
 
 		if (currentCell.value !== 0 && currentCell.element.classList.contains("blank_cell_highlight_" + color)) {
 			currentCell.element.firstChild.value = "";
@@ -414,9 +416,7 @@ function deleteColoredCells(element) {
 
 			currentCell.element.classList.remove("blank_cell_highlight_" + color);
 
-			if (color !== "black") {
-				currentCell.element.classList.add("blank_cell_highlight_" + cells.blankCellColor);
-			}
+			currentCell.element.classList.add("blank_cell_highlight_" + cells.blankCellColor);
 		}
 	}
 
