@@ -77,7 +77,7 @@
 				</ul>
 				
 				<div class="small_header">Guessing tools:</div>
-				<ul>
+<!-- 				<ul>
 					<li>
 						Mark blank cells:
 						<select title="Mark all blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
@@ -98,7 +98,26 @@
 							<option style="color: purple;">Purple</option>
 						</select>
 					</li>
-				</ul>
+				</ul> -->
+				<table id="guessing_tools_table">
+					<tbody>
+						<tr>
+							<td>Mark blank cells:</td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells('black');" style="color: black; background-color: #FF8;" id="mark_blank_cells_black" title="Mark all blank cells black so they can be deleted easily. This is useful for making guesses.">Black</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells('blue');" style="color: blue;" id="mark_blank_cells_blue" title="Mark all blank cells blue so they can be deleted easily. This is useful for making guesses.">Blue</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells('red');" style="color: red;" id="mark_blank_cells_red" title="Mark all blank cells red so they can be deleted easily. This is useful for making guesses.">Red</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells('green');" style="color: green;" id="mark_blank_cells_green" title="Mark all blank cells green so they can be deleted easily. This is useful for making guesses.">Green</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells('purple');" style="color: purple;" id="mark_blank_cells_purple" title="Mark all blank cells purple so they can be deleted easily. This is useful for making guesses.">Purple</a></td>
+						</tr><tr>
+							<td>Delete cells marked:</td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells('black');" style="color: black;" title="Delete all cells marked black.">Black</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells('blue');" style="color: blue;" title="Delete all cells marked blue.">Blue</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells('red');" style="color: red;" title="Delete all cells marked red.">Red</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells('green');" style="color: green;" title="Delete all cells marked green.">Green</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells('purple');" style="color: purple;" title="Delete all cells marked purple.">Purple</a></td>
+						</tr>
+					</tbody>
+				</table>
 				
 				<div class="small_header">Solution/Hints:</div>
 				<ul>

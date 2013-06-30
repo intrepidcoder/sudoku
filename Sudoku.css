@@ -69,6 +69,13 @@ a:active {
 	cursor: help;
 }
 
+#guessing_tools_table {
+	border-width: 0px;
+	border-spacing: 0px;
+	margin: 10px 0px 10px 40px;
+	padding: 0px;
+}
+
 .cell {
 	border-bottom-style: none;
 	border-color: black;
@@ -152,6 +159,10 @@ a:active {
 	margin-left: 0px;
 	margin-right: 0px;
 	padding: 1px 4px;
+}
+
+.blank_cell_highlight_black input {
+	color: black;
 }
 
 .blank_cell_highlight_red input {

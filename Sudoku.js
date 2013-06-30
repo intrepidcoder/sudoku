@@ -388,15 +388,16 @@ function setBlankCells(color) {
 		}
 
 	}
-
+	
+	// Highlight selected link.
+	document.getElementById("mark_blank_cells_" + cells.blankCellColor).style.backgroundColor = "";
+	document.getElementById("mark_blank_cells_" + color).style.backgroundColor = "#FF8";
+	
 	cells.blankCellColor = color;
 }
 
-function deleteColoredCells(element) {
-	var color = element.value.toLowerCase();
-	element.value = "Select Color";
-
-	if (color === "select color" || !confirm("Are you sure you want to delete all cells marked " + color + "?")) {
+function deleteColoredCells(color) {
+	if (!confirm("Are you sure you want to delete all cells marked " + color + "?")) {
 		return;
 	}
 
@@ -404,10 +405,6 @@ function deleteColoredCells(element) {
 
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
-
-		// if (currentCell.value !== 0) {
-			// console.log(currentCell.element.classList.contains("blank_cell_highlight_" + color));
-		// }
 
 		if (currentCell.value !== 0 && currentCell.element.classList.contains("blank_cell_highlight_" + color)) {
 			currentCell.element.firstChild.value = "";
