@@ -288,7 +288,9 @@ function submitGivens() {
 		// document.getElementById("solving_status").innerHTML = "Solving puzzle...";
 		// document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
 		document.getElementById("controls").style.display = "block";
+		document.getElementById("grid_table").style.position = "static";
 		document.getElementById("grid_table").style.marginTop = "8px";
+		document.getElementById("grid_table").style.marginLeft = "8px";
 		
 		cells.solution = puzzle.toString();
 		for (var i = 0; i < 81; i++) {
