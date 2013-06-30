@@ -43,12 +43,19 @@ a:active {
 	margin: 3px 10px;
 }
 
+#top_bar a {
+	font-size: 10pt;
+}
+
 #grid_table {
 	border-collapse: collapse;
 	border-spacing: 0px;
 	float: left;
 	height: 551px;
-	margin: 22px 0px 0px 8px;
+	margin-top: 22px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 8px;
 	width: 536px;
 }
 
@@ -57,12 +64,18 @@ a:active {
 	border-width: 2px;
 	display: none;
 	float: left;
-	margin: 8px 0px 0px 8px;
+	margin-top: 8px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 8px;
 	width: 350px;
 }
 
 #controls ul {
-	margin: 10px 0px;
+	margin-top: 10px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 0px;
 }
 
 #solving_status {
@@ -72,7 +85,10 @@ a:active {
 #guessing_tools_table {
 	border-width: 0px;
 	border-spacing: 0px;
-	margin: 10px 0px 10px 40px;
+	margin-top: 10px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 40px;
 	padding: 0px;
 }
 
