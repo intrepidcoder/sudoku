@@ -536,6 +536,11 @@ window.onload = function() {
 
 			currentInput = currentCell.element.appendChild(document.createElement("input"));
 			currentInput.type = "text";
+			
+			if (/android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase())) {
+				currentInput.type = "tel";
+			}
+			
 			currentInput.tabIndex = tabIndex;
 			tabIndex++;
 

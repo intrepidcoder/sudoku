@@ -507,10 +507,14 @@ function Puzzle(givens) {
 				guessCell = cells[i];
 			} else {
 				currentCell = cells[i];
-
+				
+				// Choose the cell with the least candidates:
 				if (currentCell.value === 0 && currentCell.candidates.length < guessCell.candidates.length) {
 					guessCell = currentCell;
 				}
+				
+				// Choose the first empty cell.
+				// break;
 			}
 		}
 
@@ -557,10 +561,9 @@ function Puzzle(givens) {
 		return solution;
 	};
 
-	/**
-	 * Returns the solution that occurs first in lexicographical order to the puzzle if firstSolution is true.
-	 * Otherwise returns the solution that occurs last in lexicographical order.
-	 **/
+	
+	// Returns the solution that occurs first in lexicographical order to the puzzle if firstSolution is true.
+	// Otherwise returns the solution that occurs last in lexicographical order.
 	var solve = function solve(givens) {
 		var stack = [];
 		var values;
@@ -591,74 +594,3 @@ function Puzzle(givens) {
 
 	solution = solve(givens);
 }
-
-// window.onload = function() {
-
-
-	// var a = [].concat;
-	// var objWindow = a();
-
-	// document.getElementById("hi").innerText = (objWindow) + "";
-	
-	// alert("Hello World!");
-
-
-/* 	_=+!![],$=_+_;$_=[][(![]+'')[$+_]+({}+'')[_]+(!![]+'')[_]+(!![]+'')[+[]]]+'';$$=[]
-	[({}+'')[$+_+$]+(''+{})[_]+$_[$]+({}+'')[$+_+$]+(![]+'')[_]+(!![]+'')[+[]]];_$=(![
-	]+'')[_+$+_]+$_[$+''+(_+$)]+(![]+'')[_]+(![]+'')[$];___=(($$()[+[]][_$]("'\\"+_+_+
-	(+[])+"'"))+(![]+'')[$+$]+(![]+'')[$]+(![]+'')[$]+(''+{})[_]+(''+{})[$+_+$+$]+($$(
-	)+"")[$*$*$]+(''+{})[_]+(!![]+'')[_]+(![]+'')[$]+$_[$*(_+$+_+$+_)*$]+'!');$$()[+[]
-	][_$]((![]+'')[_]+(![]+'')[$]+(![]+'')[$+$]+(!![]+'')[_]+(!![]+'')[+[]]+'(___);');
- */
-	// console.log(a());
-	// console.log(objWindow);
-	// var p = [];
-	// p.push(new Puzzle("530070000600195000098000060800060003400803001700020006060000280000419005000080079")); // singles only
-	// p.push(new Puzzle("000000000000003085001020000000507000004000100090000000500000073002010000000040009")); // singles and hidden singles only
-	// p.push(new Puzzle("100920000524010000000000070050008102000000000402700090060000000000030945000071006")); // no guesses
-	// p.push(new Puzzle("120400300300010050006000100700090000040603000003002000500080700007000005000000098")); // this one needs guesses
-	// p.push(new Puzzle("000000000000000000000000000000000000000000000000000000000000000000000000000000000")); // blank
-
-	// for (var i = 0; i < p.length; i++) {
-
-		// console.log("The solution is: " + p[i].toString());
-		// if(p[i].hasSolution()) {
-			// console.log("Solved puzzle "+ i + ".");
-		// } else {
-			// console.log("Puzzle is unsolved.");
-		// }
-	// }
-// }
-
-/* function Puzzle(values) {
-	var cells[];
-	var guessCell;
-	var guessCellCandidates;
-	var solution; // String
-
-	this.Cell = function Cell(index, value) {
-		this.neighbors = [];
-		this.rowNeighbors = [];
-		this.columnNeighbors = [];
-		this.blockNeighbors = [];
-		this.candidates = [];
-		this.setValue = function() {}; // Set value. If value equals zero, reset candidates.
-		this.toString = function() {};
-	}
-
-	var process = function(values) {
-		// Perform function of grid.
-		// Reset cells to values.
-		// Process singles, hidden singles.
-		// Set guessCell to the index of the cell with the least number of candidates; set guessCellCandidates.
-		// Return each cell's value concatenated in a string.
-	};
-
-	var isValid = function(values) {}; // Don't count on cell values being accurate (neighbors OK). Use values from parameter.
-	var isFilled = function(values) { return values.indexOf("0") === -1; };
-
-	var solve = function() {
-		// For each string in stack push the string created by replacing the char at index guessCell.index with the candidates in guessCellCandidates. See solve above.
-	}
-	// Initialize cells.
-} */
