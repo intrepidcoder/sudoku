@@ -535,10 +535,11 @@ window.onload = function() {
 			currentCell.candidatesElement.classList.add("candidates");
 
 			currentInput = currentCell.element.appendChild(document.createElement("input"));
-			currentInput.type = "text";
 			
 			if (/android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase())) {
 				currentInput.type = "tel";
+			} else {
+				currentInput.type = "text";
 			}
 			
 			currentInput.tabIndex = tabIndex;
