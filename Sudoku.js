@@ -283,6 +283,7 @@ function submitGivens() {
 	} else {
 
 		document.getElementById("top_bar").style.display = "none";
+		document.getElementById("begin_solving").style.display = "none";
 		// document.getElementById("submit_givens").style.display = "none";
 		// document.getElementById("paste_puzzle").style.display = "none";
 		// document.getElementById("solving_status").innerHTML = "Solving puzzle...";

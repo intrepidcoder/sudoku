@@ -9,7 +9,7 @@
 	<body>
 		<div id="top_bar">
 			<ul>
-				<li>To begin, find a sudoku puzzle and input its values below. When finished, <a href="javascript:void(0);" onclick="submitGivens();">begin solving</a>.</li>
+				<li>To begin, find a sudoku puzzle and input its values below.</li>
 				<li style="float: right;"><a href="help.html" target="_blank">Help/About</a></li>
 				<li style="float: right;" id="paste_puzzle"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li>
 			</ul>
@@ -130,6 +130,10 @@
 					</ul>
 
 			</form>
+		</div>
+		
+		<div id="begin_solving">
+			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
 		</div>
 	</body>
 </html>

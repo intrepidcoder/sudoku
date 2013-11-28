@@ -72,6 +72,29 @@ a:active {
 	width: 350px;
 }
 
+#begin_solving {
+	/* border-style: solid; */
+	/* border-width: 2px; */
+	position: absolute;
+	top: 26px;
+	left: 550px;
+}
+
+#begin_solving_button {
+	padding: 0px;
+	cursor: pointer;
+	text-align: center;
+	font-family: arial, sans-serif;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	border: 1px solid blue;
+	border-radius: 5px;
+	height: 30px;
+	width: 150px;
+	margin: 0px;
+}
+
 #controls ul {
 	margin-top: 10px;
 	margin-right: 0px;
@@ -196,4 +219,14 @@ a:active {
 
 .blank_cell_highlight_purple input {
 	color: purple;
+}
+
+.large_button {
+	background-color: #305BC9;
+	background-image: url(Images/button_background.png);
+}
+
+.large_button_hover {
+	background-color: #4787ED;
+	background-image: url(Images/button_background_hover.png);
 }
