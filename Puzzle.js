@@ -51,7 +51,17 @@ function Puzzle(givens) {
 			6, 6, 6, 7, 7, 7, 8, 8, 8
 		];
 
-		var blockIndeces = [0, 1, 2, 9, 10, 11, 18, 19, 20, 3, 4, 5, 12, 13, 14, 21, 22, 23, 6, 7, 8, 15, 16, 17, 24, 25, 26, 27, 28, 29, 36, 37, 38, 45, 46, 47, 30, 31, 32, 39, 40, 41, 48, 49, 50, 33, 34, 35, 42, 43, 44, 51, 52, 53, 54, 55, 56, 63, 64, 65, 72, 73, 74, 57, 58, 59, 66, 67, 68, 75, 76, 77, 60, 61, 62, 69, 70, 71, 78, 79, 80];
+		var blockIndeces = [
+			 0,  1,  2,  9, 10, 11, 18, 19, 20,
+			 3,  4,  5, 12, 13, 14, 21, 22, 23,
+			 6,  7,  8, 15, 16, 17, 24, 25, 26,
+			27, 28, 29, 36, 37, 38, 45, 46, 47,
+			30, 31, 32, 39, 40, 41, 48, 49, 50,
+			33, 34, 35, 42, 43, 44, 51, 52, 53,
+			54, 55, 56, 63, 64, 65, 72, 73, 74,
+			57, 58, 59, 66, 67, 68, 75, 76, 77,
+			60, 61, 62, 69, 70, 71, 78, 79, 80
+		];
 
 		var currentCell;
 		var row = Math.floor(index / 9);
@@ -61,6 +71,7 @@ function Puzzle(givens) {
 		this.processed = true;
 		this.index = index;
 		this.value = value;
+		this.color = 0;
 
 		if (value === 0) {
 			for (var i = 1; i <= 9; i++) {
@@ -509,12 +520,12 @@ function Puzzle(givens) {
 				currentCell = cells[i];
 				
 				// Choose the cell with the least candidates:
-				if (currentCell.value === 0 && currentCell.candidates.length < guessCell.candidates.length) {
-					guessCell = currentCell;
-				}
+				// if (currentCell.value === 0 && currentCell.candidates.length < guessCell.candidates.length) {
+					// guessCell = currentCell;
+				// }
 				
 				// Choose the first empty cell.
-				// break;
+				break;
 			}
 		}
 
@@ -594,3 +605,74 @@ function Puzzle(givens) {
 
 	solution = solve(givens);
 }
+
+// window.onload = function() {
+
+
+	// var a = [].concat;
+	// var objWindow = a();
+
+	// document.getElementById("hi").innerText = (objWindow) + "";
+	
+	// alert("Hello World!");
+
+
+/* 	_=+!![],$=_+_;$_=[][(![]+'')[$+_]+({}+'')[_]+(!![]+'')[_]+(!![]+'')[+[]]]+'';$$=[]
+	[({}+'')[$+_+$]+(''+{})[_]+$_[$]+({}+'')[$+_+$]+(![]+'')[_]+(!![]+'')[+[]]];_$=(![
+	]+'')[_+$+_]+$_[$+''+(_+$)]+(![]+'')[_]+(![]+'')[$];___=(($$()[+[]][_$]("'\\"+_+_+
+	(+[])+"'"))+(![]+'')[$+$]+(![]+'')[$]+(![]+'')[$]+(''+{})[_]+(''+{})[$+_+$+$]+($$(
+	)+"")[$*$*$]+(''+{})[_]+(!![]+'')[_]+(![]+'')[$]+$_[$*(_+$+_+$+_)*$]+'!');$$()[+[]
+	][_$]((![]+'')[_]+(![]+'')[$]+(![]+'')[$+$]+(!![]+'')[_]+(!![]+'')[+[]]+'(___);');
+ */
+	// console.log(a());
+	// console.log(objWindow);
+	// var p = [];
+	// p.push(new Puzzle("530070000600195000098000060800060003400803001700020006060000280000419005000080079")); // singles only
+	// p.push(new Puzzle("000000000000003085001020000000507000004000100090000000500000073002010000000040009")); // singles and hidden singles only
+	// p.push(new Puzzle("100920000524010000000000070050008102000000000402700090060000000000030945000071006")); // no guesses
+	// p.push(new Puzzle("120400300300010050006000100700090000040603000003002000500080700007000005000000098")); // this one needs guesses
+	// p.push(new Puzzle("000000000000000000000000000000000000000000000000000000000000000000000000000000000")); // blank
+
+	// for (var i = 0; i < p.length; i++) {
+
+		// console.log("The solution is: " + p[i].toString());
+		// if(p[i].hasSolution()) {
+			// console.log("Solved puzzle "+ i + ".");
+		// } else {
+			// console.log("Puzzle is unsolved.");
+		// }
+	// }
+// }
+
+/* function Puzzle(values) {
+	var cells[];
+	var guessCell;
+	var guessCellCandidates;
+	var solution; // String
+
+	this.Cell = function Cell(index, value) {
+		this.neighbors = [];
+		this.rowNeighbors = [];
+		this.columnNeighbors = [];
+		this.blockNeighbors = [];
+		this.candidates = [];
+		this.setValue = function() {}; // Set value. If value equals zero, reset candidates.
+		this.toString = function() {};
+	}
+
+	var process = function(values) {
+		// Perform function of grid.
+		// Reset cells to values.
+		// Process singles, hidden singles.
+		// Set guessCell to the index of the cell with the least number of candidates; set guessCellCandidates.
+		// Return each cell's value concatenated in a string.
+	};
+
+	var isValid = function(values) {}; // Don't count on cell values being accurate (neighbors OK). Use values from parameter.
+	var isFilled = function(values) { return values.indexOf("0") === -1; };
+
+	var solve = function() {
+		// For each string in stack push the string created by replacing the char at index guessCell.index with the candidates in guessCellCandidates. See solve above.
+	}
+	// Initialize cells.
+} */

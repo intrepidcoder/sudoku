@@ -2,6 +2,7 @@
 	<head>
 		<script type="text/javascript" language="JavaScript" src="Puzzle.js"></script>
 		<script type="text/javascript" language="JavaScript" src="Sudoku.js"></script>
+		<script type="text/javascript" language="JavaScript" src="Encoding.js"></script>
 		<link rel="stylesheet" type="text/css" href="Sudoku.css" />
 		<title>Sudoku</title>
 	</head>
@@ -10,8 +11,9 @@
 		<div id="top_bar">
 			<ul>
 				<li>To begin, find a sudoku puzzle and input its values below.</li>
-				<li style="float: right;"><a href="help.html" target="_blank">Help/About</a></li>
+				<li style="float: right;"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></li>
 				<li style="float: right;" id="paste_puzzle"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li>
+				<li style="float: right;" id="save_puzzle"><a href="javascript:void(0);" onclick="savePuzzle();" title="Generate a text string that stores the current clues, values, and pencilmarks.">Save</a></li>
 			</ul>
 		</div>
 		
@@ -22,8 +24,9 @@
 		<div id="controls">
 			<form name="controls_form">
 				<!-- <div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div> -->
-				<div class="small_header"><a href="help.html" target="_blank">Help/About</a></div>
+				<div class="small_header"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></div>
 				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
+				<div class="small_header"><a href="javascript:void(0);" title="Generate a text string that stores the current clues, values, and pencilmarks." onclick="savePuzzle();">Save</a></div>
 				<!-- <ul>
 					<li>
 						<input type="button" name="clear_cells" value="Clear cells" title="Delete all clues and values, reset pencil marks, and remove highlighting." onclick="clearCells();" />
@@ -133,7 +136,7 @@
 		</div>
 		
 		<div id="begin_solving">
-			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
+			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" title="Submit the entered numbers as clues and begin solving the sudoku puzzle." onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
 		</div>
 	</body>
 </html>

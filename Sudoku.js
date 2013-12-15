@@ -77,9 +77,13 @@ function inputOnKeyDown(e) {
 
 					this.value = "";
 					currentCell.setValue(0);
-					currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+					currentCell.candidatesElement.innerHTML = currentCell.getPencilmarkString();
 					showDuplicates();
-
+					
+					// Before givens are submitted, automatically update pencilmarks.
+					if (!cells.hasOwnProperty("solution")) {
+						updatePencilmarks();
+					} 
 				}
 
 				// 0-9 || numpad 0-9
@@ -93,21 +97,23 @@ function inputOnKeyDown(e) {
 					currentCell.setValue(digit);
 					showDuplicates();
 
-					// console.log(currentCell.neighbors);
-
-					if (document.getElementById("auto_pencilmarks").checked) {
+					// Before givens are submitted, automatically update pencilmarks.
+					if (!cells.hasOwnProperty("solution")) {
+						updatePencilmarks();
+					} else if (document.getElementById("auto_pencilmarks").checked) {
 						for (var i = 0; i < 20; i++) {
 							if (currentCell.neighbors[i].value === 0) {
 
 								currentCell.neighbors[i].pencilmarks[currentCell.value - 1] = false;
-								currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+								currentCell.neighbors[i].candidatesElement.innerHTML = currentCell.neighbors[i].getPencilmarkString();
 							}
 						}
 					}
 					currentCell.candidatesElement.innerHTML = currentCell.value;
 				}
 			} else {
-				// 0-9 || numpad 0-9
+				
+				// Pencil marks: 0-9 || numpad 0-9
 				if ((code > 48 && code <= 57) || (code > 96 && code <= 105)) {
 					var digit = code - 48;
 
@@ -118,7 +124,7 @@ function inputOnKeyDown(e) {
 					if (currentCell.value === 0) {
 						currentCell.pencilmarks[digit - 1] = !currentCell.pencilmarks[digit - 1];
 
-						currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+						currentCell.candidatesElement.innerHTML = currentCell.getPencilmarkString();
 					}
 				}
 			}
@@ -214,32 +220,45 @@ function clearCells() {
 }
 
 function pastePuzzle() {
-	var values = window.prompt("Enter a sudoku puzzle using zeros for empty cells.\nNon-numeric characters are ignored.");
+	var values = window.prompt("Enter a sudoku puzzle. Use \"0\", \".\", \"*\", or \"_\" for empty cells.\nAll other characters are ignored.\nAlternatively, load a previously saved puzzle.");
+	
 
-	values = values.replace(/[^0-9]/g, "");
+	if (values.length === 81) {
+		values = values.replace(/[.*_]/g, "0");
+		values = values.replace(/[^0-9]/g, "");
+		
+		for (var i = 0; i < 81; i++) {
+			var currentCell = cells[i];
 
-	if (values.length !== 81) {
+			if (currentCell.element.children.length > 0) {
+				currentCell.setValue(parseInt(values.charAt(i)));
+
+				if (currentCell.value !== 0) {
+					currentCell.element.firstChild.value = currentCell.value;
+				} else {
+					currentCell.element.firstChild.value = "";
+				}
+			}
+		}
+		
+		clearPencilmarks();
+	} else if (values.length === 243) {
+		submitGivens();
+		
+		decode(values);
+	
+	} else {
 		window.alert("Invalid input");
 		return;
 	}
 
-	for (var i = 0; i < 81; i++) {
-		var currentCell = cells[i];
-
-		if (currentCell.element.children.length > 0) {
-			currentCell.setValue(parseInt(values.charAt(i)));
-
-			if (currentCell.value !== 0) {
-				currentCell.element.firstChild.value = currentCell.value;
-			} else {
-				currentCell.element.firstChild.value = "";
-			}
-		}
-	}
-
-	clearPencilmarks();
 	highlight(0);
 	showDuplicates();
+}
+
+function savePuzzle() {
+	window.prompt("Copy the text string below and paste it into a new text file.\nTo re-load the puzzle, paste the string into the paste puzzle tool.", encode());
+
 }
 
 function highlight(value) {
@@ -299,12 +318,15 @@ function submitGivens() {
 
 			if (currentCell.value !== 0) {
 				currentCell.element.innerHTML = currentCell.value;
+				currentCell.isGiven = true;;
 			} else {
 				currentCell.element.classList.add("blank_cell_highlight_black");
 			}
 
 			currentCell.solution = parseInt(cells.solution[i]);
 		}
+		
+		clearPencilmarks();
 	}
 }
 
@@ -388,6 +410,7 @@ function setBlankCells(color) {
 			currentCell.element.classList.remove("blank_cell_highlight_purple");
 
 			currentCell.element.classList.add("blank_cell_highlight_" + color);
+			currentCell.color = cells.getColorIndex(color);
 		}
 
 	}
@@ -417,6 +440,7 @@ function deleteColoredCells(color) {
 			currentCell.element.classList.remove("blank_cell_highlight_" + color);
 
 			currentCell.element.classList.add("blank_cell_highlight_" + cells.blankCellColor);
+			currentCell.color = cells.getColorIndex(cells.blankCellColor);
 		}
 	}
 
@@ -436,6 +460,8 @@ window.onload = function() {
 		this.blockNeighbors = [];
 		this.candidates = [];
 		this.pencilmarks = [true, true, true, true, true, true, true, true, true];
+		this.isGiven = false;
+		this.color = 0;
 
 		var blocks = [
 			0, 0, 0, 1, 1, 1, 2, 2, 2,
@@ -512,8 +538,21 @@ window.onload = function() {
 		this.toString = function toString() {
 			return this.value + "";
 		};
+		
+		this.getPencilmarkString = function() {
+			var result = "";
+			for (var i = 0; i < 9; i++) {
+				if (this.pencilmarks[i]) {
+					result += i + 1;
+				}
+			}
+			
+			return result;
+		}
 
 		this.setValue(0);
+		
+		
 	};
 
 	var tabIndex = 1;
@@ -577,6 +616,17 @@ window.onload = function() {
 	cells.lastSelectedCell = null;
 	cells.hints = 3;
 	cells.blankCellColor = "black";
+	
+	cells.getColorIndex = function(color) {
+		var colorIndexList = {"black":0, "blue":1, "red":2, "green":3, "purple": 4};
+		return colorIndexList[color];
+	}
+	
+	cells.getColorValue = function(num) {
+		var colorValueList = ["black", "blue", "red", "green", "purple"];
+		return colorValueList[num];
+	}
+	
 	updatePencilmarks();
 
 };
