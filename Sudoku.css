@@ -32,6 +32,7 @@ a:active {
 	position: absolute;
 	top: 0px;
 	width: 100%;
+	min-width: 675px;
 }
 
 #top_bar ul {
@@ -69,7 +70,7 @@ a:active {
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 8px;
-	width: 400px;
+	width: 425px;
 }
 
 #begin_solving {
@@ -114,6 +115,27 @@ a:active {
 	margin-bottom: 10px;
 	margin-left: 40px;
 	padding: 0px;
+}
+
+#side_bar {
+	width: 450px;
+	z-index: 2;
+	position: fixed;
+	top: 0px;
+	right: -450px;
+	height: 100%;
+	background-color: #AAA;
+	/* cursor: w-resize; */
+	overflow: auto;
+}
+
+#side_bar_close {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
 }
 
 .cell {

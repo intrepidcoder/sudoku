@@ -220,8 +220,12 @@ function clearCells() {
 }
 
 function pastePuzzle() {
-	var values = window.prompt("Enter a sudoku puzzle. Use \"0\", \".\", \"*\", or \"_\" for empty cells.\nAll other characters are ignored.\nAlternatively, load a previously saved puzzle.");
+	// var values = window.prompt("Enter a sudoku puzzle. Use \"0\", \".\", \"*\", or \"_\" for empty cells.\nAll other characters are ignored.\nAlternatively, load a previously saved puzzle.");
+	var values = document.getElementById("paste_puzzle").value;
 	
+	if (!values) {
+		return;
+	}
 
 	if (values.length === 81) {
 		values = values.replace(/[.*_]/g, "0");
@@ -259,6 +263,13 @@ function pastePuzzle() {
 function savePuzzle() {
 	window.prompt("Copy the text string below and paste it into a new text file.\nTo re-load the puzzle, paste the string into the paste puzzle tool.", encode());
 
+}
+
+function saveLoadPuzzle() {
+	document.getElementById('side_bar').style.right='0px';
+	
+	document.getElementById("copy_puzzle").value = cells.toString().replace(/[^0-9]/g, "");
+	document.getElementById("export_save").value = encode();
 }
 
 function highlight(value) {
@@ -311,6 +322,14 @@ function submitGivens() {
 		document.getElementById("grid_table").style.position = "static";
 		document.getElementById("grid_table").style.marginTop = "8px";
 		document.getElementById("grid_table").style.marginLeft = "8px";
+		document.getElementById("side_bar").style.right = "-450px";
+		
+		document.getElementById("import_save_button").title = "This option is disabled when a sudoku puzzle is in progress.";
+		document.getElementById("import_save_button").disabled = true;
+		document.getElementById("paste_puzzle_button").title = "This option is disabled when a sudoku puzzle is in progress.";
+		document.getElementById("paste_puzzle_button").disabled = true;
+		document.getElementById("load_cookie").title = "This option is disabled when a sudoku puzzle is in progress.";
+		document.getElementById("load_cookie").disabled = true;
 		
 		cells.solution = puzzle.toString();
 		for (var i = 0; i < 81; i++) {
@@ -628,5 +647,37 @@ window.onload = function() {
 	}
 	
 	updatePencilmarks();
-
+	
+	
+	// var sideBar = document.body.appendChild(document.createElement("div"));
+	// var sideBarDragPos = 0;
+	
+	// sideBar.id = "side_bar";
+	// sideBar.style.width = "450px";
+	
+	// sideBar.onmousedown = function() {
+		// sideBarDragPos = window.event.clientX;
+	// }
+	
+	// sideBar.onmousemove = function() {
+		// if (sideBarDragPos) {
+			// if (sideBarDragPos - window.event.clientX < 0) {
+				// sideBar.style.right = (sideBarDragPos - window.event.clientX) + "px";
+			// }
+		// }
+	// }
+	
+	// sideBar.onmouseup = function() {
+		// sideBar.style.right = -parseInt(sideBar.style.width) + "px";
+		// sideBarDragPos = 0;
+	// }
+	
+	// var currentElement = sideBar.appendChild(document.createElement("div"));
+	
+	// currentElement.className = "small_header";
+	// currentElement.textContent = "Paste Puzzle:";
+	
+	// currentElement = sideBar.appendChild(document.createElement("input"));
+	// currentElement.type = "text";
+	// currentElement.id = "paste_puzzle";
 };

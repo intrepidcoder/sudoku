@@ -12,21 +12,23 @@
 			<ul>
 				<li>To begin, find a sudoku puzzle and input its values below.</li>
 				<li style="float: right;"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></li>
-				<li style="float: right;" id="paste_puzzle"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li>
-				<li style="float: right;" id="save_puzzle"><a href="javascript:void(0);" onclick="savePuzzle();" title="Generate a text string that stores the current clues, values, and pencilmarks.">Save</a></li>
+				<!-- <li style="float: right;"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li> -->
+				<!-- <li style="float: right;" id="save_puzzle"><a href="javascript:void(0);" onclick="savePuzzle();" title="Generate a text string that stores the current clues, values, and pencilmarks.">Save</a></li> -->
+				<li style="float: right;" id="load_puzzle"><a href="javascript:void(0);" onclick="saveLoadPuzzle();" title="View options to save or load a sudoku puzzle.">Save/Load</a></li>
 			</ul>
 		</div>
-		
+
 		<table id="grid_table">
 			<tbody></tbody>
 		</table>
-		
+
 		<div id="controls">
 			<form name="controls_form">
 				<!-- <div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div> -->
 				<div class="small_header"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></div>
 				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
-				<div class="small_header"><a href="javascript:void(0);" title="Generate a text string that stores the current clues, values, and pencilmarks." onclick="savePuzzle();">Save</a></div>
+				<!-- <div class="small_header"><a href="javascript:void(0);" title="Generate a text string that stores the current clues, values, and pencilmarks." onclick="savePuzzle();">Save</a></div> -->
+				<div class="small_header"><a href="javascript:void(0);" title="View options to save or load a sudoku puzzle." onclick="saveLoadPuzzle();">Save/Load</a></div>
 				<!-- <ul>
 					<li>
 						<input type="button" name="clear_cells" value="Clear cells" title="Delete all clues and values, reset pencil marks, and remove highlighting." onclick="clearCells();" />
@@ -36,7 +38,7 @@
 						<input type="button" name="paste_puzzle" id="paste_puzzle" value="Paste puzzle" title="Paste values to place into the puzzle. Note: this overwrites existing values." onclick="pastePuzzle();" />
 					</li>
 				</ul> -->
-				
+
 				<div class="small_header">Cell Highlighting:</div>
 				<ul>
 					<li>
@@ -52,7 +54,7 @@
 						<input type="button" name="highlight_none" value="Clear" class="highlight_button" title="Clear all highlighting." onclick="highlight(0);" />
 					</li>
 				</ul>
-				
+
 				<div class="small_header">Pencil Marks:</div>
 				<ul>
 					<li>
@@ -69,7 +71,7 @@
 						<input type="button" name="reset_pencilmarks" value="Reset" title="Add all pencil marks to empty cells." onclick="clearPencilmarks();" />
 					</li>
 				</ul>
-				
+
 				<div class="small_header">Validation:</div>
 				<ul>
 					<li>
@@ -78,7 +80,7 @@
 					</li>
 					<li></li>
 				</ul>
-				
+
 				<div class="small_header">Guessing tools:</div>
 <!-- 				<ul>
 					<li>
@@ -121,7 +123,7 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<div class="small_header">Solution/Hints:</div>
 				<ul>
 					<li>
@@ -134,9 +136,55 @@
 
 			</form>
 		</div>
-		
+
 		<div id="begin_solving">
 			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" title="Submit the entered numbers as clues and begin solving the sudoku puzzle." onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
+		</div>
+		
+		<div id="side_bar">
+			<div id="side_bar_close"><a href="javascript:void(0);" onclick="document.getElementById('side_bar').style.right='-450px';">Close</a></div>
+			
+			<div class="small_header">Paste Puzzle:</div>
+			<ul>
+				<li>Enter a sudoku puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. All other characters are ignored. This overwrites existing values.</li>
+				<li>
+					<input type="text" id="paste_puzzle" style="width: 300px;" title="Paste values to place into the puzzle. Note: this overwrites existing values."/>
+					<input type="button" id="paste_puzzle_button" value="Paste Puzzle" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values." />
+				</li>
+			</ul>
+			
+			<div class="small_header">Copy Puzzle:</div>
+			<ul>
+				<li>Copy the current values of the sudoku puzzle as an 81 digit text string.</li>
+				<li>
+				<input type="text" id="copy_puzzle" style="width: 300px;" title="Copy the current values of the sudoku puzzle." onclick="this.value = cells.toString().replace(/[^0-9]/g, ''); javascript:select();" />
+				</li>
+			</ul>
+
+			<div class="small_header">Export State:</div>
+			<ul>
+				<li>Copy this text string and paste it into a new text file to store the current state of the clues, values, and pencilmarks.</li>
+				<li>
+				<input type="text" id="export_save" style="width: 300px;" title="This text string stores the current state of the clues, values, and pencilmarks." onclick="this.value = encode(); javascript:select();" />
+				</li>
+			</ul>
+			
+			<div class="small_header">Import State:</div>
+			<ul>
+				<li>Reload a saved sudoku puzzle by pasting the text string below.</li>
+				<li>
+					<input type="text" id="import_save" style="width: 300px;" title="Reload an previous save. Note: this overwrites existing values."/>
+					<input type="button" value="Import Save" id="import_save_button" onclick="decode(document.getElementById('import_save').value);" title="Reload an previous save. Note: this overwrites existing values." />
+				</li>
+			</ul>
+			
+			<div class="small_header">Save/Load Cookie:</div>
+			<ul>
+				<li>
+					<input type="button" value="Save to Cookie" id="save_cookie" onclick="saveToCookie();" title="Save the current state of the clues, values, and pencilmarks to a cookie."/>
+					<input type="button" value="Load from Cookie" id="load_cookie" onclick="loadFromCookie();" title="Load the sudoku puzzle saved to a cookie if one is present." />
+				</li>
+			</ul>
 		</div>
 	</body>
 </html>
