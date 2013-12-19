@@ -127,8 +127,9 @@
 				<div class="small_header">Solution/Hints:</div>
 				<ul>
 					<li>
-						<input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
-						<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label>
+						<!-- <input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
+						<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label> -->
+						<input type="button" name="show_solution" id="show_solution" value="Show Solution" title="Show the solution to the sudoku puzzle in a new window." onclick="showSolution();" />
 					</li><li>
 						<input type="button" name="get_hint" id="get_hint" value="Hint (3)" title="Give a hint for the selected cell. There are three hints remaining." onclick="getHint();" />
 					</li>
@@ -138,7 +139,7 @@
 		</div>
 
 		<div id="begin_solving">
-			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" title="Submit the entered numbers as clues and begin solving the sudoku puzzle." onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
+			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" title="Submit the entered numbers as clues and begin solving the sudoku puzzle." onclick="submitGivens(); clearPencilmarks();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
 		</div>
 		
 		<div id="side_bar">

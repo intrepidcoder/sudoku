@@ -344,44 +344,82 @@ function submitGivens() {
 
 			currentCell.solution = parseInt(cells.solution[i]);
 		}
-		
-		clearPencilmarks();
 	}
 }
 
 function showSolution() {
+	var currentElement;
+	var row;
+	var solution = "";
 
-	var currentCell;
+	if (cells.solution === undefined || !window.confirm("Are you sure you want to show the solution?")) {
+		return;
+	}
 
-	if (cells.solution === undefined) return;
-
-	if (document.getElementById("show_solution").checked) {
-		if (!window.confirm("Are you sure you want to show the solution?")) {
-			document.getElementById("show_solution").checked = false;
-			return;
-		}
-
-		for (var i = 0; i < 81; i++) {
-			currentCell = cells[i];
-
-			if (currentCell.element.children.length > 0) {
-				currentCell.element.firstChild.value = currentCell.solution;
-				currentCell.element.firstChild.disabled = true;
-			}
-
-
-		}
-	} else {
-		for (var i = 0; i < 81; i++) {
-			currentCell = cells[i];
-
-			if (currentCell.element.children.length > 0) {
-				currentCell.element.firstChild.disabled = false;
-
-				currentCell.element.firstChild.value = currentCell.value === 0 ? "" : currentCell.value;
-			}
+	
+	for (var i = 0; i < 9; i++) {
+		row = i * 9;
+		solution += cells.solution.charAt(row) + " " + cells.solution.charAt(row + 1) + " " + cells.solution.charAt(row + 2) + " | ";
+		solution += cells.solution.charAt(row + 3) + " " + cells.solution.charAt(row + 4) + " " + cells.solution.charAt(row + 5) + " | ";
+		solution += cells.solution.charAt(row + 6) + " " + cells.solution.charAt(row + 7) + " " + cells.solution.charAt(row + 8) + "<br />";
+		
+		if (i == 2 || i == 5) {
+			solution += "------+-------+------<br />";
 		}
 	}
+	
+	if (window.solutionWindow) {
+		window.solutionWindow.close();
+	}
+	
+	window.solutionWindow = window.open("", "", "height=230,width=208,status=0,menubar=0");
+	
+	currentElement = window.solutionWindow.document.head.appendChild(document.createElement("title"));
+	currentElement.textContent = "Solution";
+	
+	
+	
+	currentElement = window.solutionWindow.document.body.appendChild(document.createElement("div"));
+	
+	// alert(solution);
+	
+	currentElement.innerHTML = solution;
+	currentElement.style.fontFamily = "Consolas";
+	currentElement.style.fontColor = "#666";
+	
+	window.onunload = function() {
+		window.solutionWindow.close();
+	};
+	
+	
+	
+	// if (document.getElementById("show_solution").checked) {
+		// if (!window.confirm("Are you sure you want to show the solution?")) {
+			// document.getElementById("show_solution").checked = false;
+			// return;
+		// }
+
+		// for (var i = 0; i < 81; i++) {
+			// currentCell = cells[i];
+
+			// if (currentCell.element.children.length > 0) {
+				// currentCell.element.firstChild.value = currentCell.solution;
+				// currentCell.element.firstChild.disabled = true;
+			// }
+
+
+		// }
+	// } else {
+		// for (var i = 0; i < 81; i++) {
+			// currentCell = cells[i];
+
+			// if (currentCell.element.children.length > 0) {
+				// currentCell.element.firstChild.disabled = false;
+
+				// currentCell.element.firstChild.value = currentCell.value === 0 ? "" : currentCell.value;
+			// }
+		// }
+	// }
 }
 
 function getHint() {

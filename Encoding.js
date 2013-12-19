@@ -53,8 +53,6 @@ function decode(input) {
 		return;
 	}
 	
-	submitGivens();
-	
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 		
@@ -92,6 +90,8 @@ function decode(input) {
 		currentCell.candidatesElement.innerHTML = currentCell.getPencilmarkString();
 	}
 
+	submitGivens();
+	showDuplicates();
 }
 
 function loadFromCookie() {
