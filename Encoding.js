@@ -108,8 +108,18 @@ function saveToCookie() {
 	var values = document.cookie.replace(/(?:(?:^|.*;\s*)state\s*\=\s*((?:[^;](?!;))*[^;]?).*)|.*/, '$1');
 	
 	
-	if (values && confirm("A save already exists. Are you sure you want to overwrite it?")) {
-		document.cookie = 'state=' + encode() + '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+	if (values) {
+		if(!confirm("A save already exists. Are you sure you want to overwrite it?")) {
+			return false;
+		}		
+	}
+	
+	document.cookie = 'state=' + encode() + '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+	
+	if (document.cookie) {
+		alert("Save successful.");
+	} else {
+		alert("Save failed. Make sure cookies are enabled in your browser.");
 	}
 	
 }

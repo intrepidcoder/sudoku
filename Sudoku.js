@@ -266,7 +266,7 @@ function savePuzzle() {
 }
 
 function saveLoadPuzzle() {
-	document.getElementById('side_bar').style.right='0px';
+	document.getElementById("side_bar").style.display="block";
 	
 	document.getElementById("copy_puzzle").value = cells.toString().replace(/[^0-9]/g, "");
 	document.getElementById("export_save").value = encode();
@@ -322,7 +322,7 @@ function submitGivens() {
 		document.getElementById("grid_table").style.position = "static";
 		document.getElementById("grid_table").style.marginTop = "8px";
 		document.getElementById("grid_table").style.marginLeft = "8px";
-		document.getElementById("side_bar").style.right = "-450px";
+		document.getElementById("side_bar").style.display = "none";
 		
 		document.getElementById("import_save_button").title = "This option is disabled when a sudoku puzzle is in progress.";
 		document.getElementById("import_save_button").disabled = true;
