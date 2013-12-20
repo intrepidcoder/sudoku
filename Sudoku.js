@@ -2,6 +2,7 @@ var cells = [];
 
 function inputOnKeyDown(e) {
 	var code = e.keyCode;
+	var pos;
 
 	switch (code) {
 		case 9: // tab
@@ -12,52 +13,60 @@ function inputOnKeyDown(e) {
 		break;
 
 		case 37: // left
-			if (this.index === 0) {
-				if (document.getElementById("cell80_input")) {
-					document.getElementById("cell80_input").focus();
+			pos = this.index;
+			
+			do {
+				if (pos === 0) {
+					pos = 80;
+				} else {
+					pos--;
 				}
-			} else {
-				if (document.getElementById("cell" + (this.index - 1) + "_input")) {
-					document.getElementById("cell" + (this.index - 1) + "_input").focus();
-				}
-			}
+			} while (cells[pos].isGiven);
+
+			document.getElementById("cell" + pos + "_input").focus();
 		break;
 
 		case 38: // up
-			if (this.index < 9) {
-				if (document.getElementById("cell" + (this.index + 72) + "_input")) {
-					document.getElementById("cell" + (this.index + 72) + "_input").focus();
+			pos = this.index;
+			
+			do {
+				if (pos < 9) {
+					pos += 72;
+				} else {
+					pos -= 9;
 				}
-			} else {
-				if (document.getElementById("cell" + (this.index - 9) + "_input")) {
-					document.getElementById("cell" + (this.index - 9) + "_input").focus();
-				}
-			}
+			} while (cells[pos].isGiven);
+
+			document.getElementById("cell" + pos + "_input").focus();
 		break;
 
 		case 39: // right
-			if (this.index === 80) {
-				if (document.getElementById("cell0_input")) {
-					document.getElementById("cell0_input").focus();
+			pos = this.index;
+			
+			do {
+				if (pos === 80) {
+					pos = 0;
+				} else {
+					pos++;
 				}
-			} else {
-				if (document.getElementById("cell" + (this.index + 1) + "_input")) {
-					document.getElementById("cell" + (this.index + 1) + "_input").focus();
-				}
-			}
+			} while (cells[pos].isGiven);
+
+			document.getElementById("cell" + pos + "_input").focus();
 		break;
 
 		case 13: // enter
 		case 40: // down
-			if (this.index > 71) {
-				if (document.getElementById("cell" + (this.index - 72) + "_input")) {
-					document.getElementById("cell" + (this.index - 72) + "_input").focus();
+			pos = this.index;
+			
+			do {
+				if (pos > 71) {
+					pos -= 72;
+				} else {
+					pos += 9;
 				}
-			} else {
-				if (document.getElementById("cell" + (this.index + 9) + "_input")) {
-					document.getElementById("cell" + (this.index + 9) + "_input").focus();
-				}
-			}
+			} while (cells[pos].isGiven);
+
+			document.getElementById("cell" + pos + "_input").focus();
 		break;
 
 		// 65-90 a-z
@@ -204,58 +213,36 @@ function showDuplicates() {
 function clearCells() {
 	if (!window.confirm("Are you sure you want to clear this sudoku puzzle?")) return;
 	window.location.reload();
-	// var currentCell;
-
-	// for (var i = 0; i < 81; i++) {
-		// currentCell = cells[i];
-		// currentCell.setValue(0);
-		// currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
-
-		// currentCell.element.classList.remove("cell_highlighted");
-		// currentCell.element.classList.remove("cell_duplicate");
-		// currentCell.candidatesElement.classList.remove("candidates_highlighted");
-		// currentCell.element.firstChild.value = "";
-		// currentCell.candidatesElement.innerHTML = "123456789";
-	// }
 }
 
 function pastePuzzle() {
 	// var values = window.prompt("Enter a sudoku puzzle. Use \"0\", \".\", \"*\", or \"_\" for empty cells.\nAll other characters are ignored.\nAlternatively, load a previously saved puzzle.");
 	var values = document.getElementById("paste_puzzle").value;
 	
-	if (!values) {
-		return;
-	}
-
-	if (values.length === 81) {
-		values = values.replace(/[.*_]/g, "0");
-		values = values.replace(/[^0-9]/g, "");
-		
-		for (var i = 0; i < 81; i++) {
-			var currentCell = cells[i];
-
-			if (currentCell.element.children.length > 0) {
-				currentCell.setValue(parseInt(values.charAt(i)));
-
-				if (currentCell.value !== 0) {
-					currentCell.element.firstChild.value = currentCell.value;
-				} else {
-					currentCell.element.firstChild.value = "";
-				}
-			}
-		}
-		
-		clearPencilmarks();
-	} else if (values.length === 243) {
-		submitGivens();
-		
-		decode(values);
+	values = values.replace(/[.*_]/g, "0");
+	values = values.replace(/[^0-9]/g, "");
 	
-	} else {
+	if (values.length !== 81) {
 		window.alert("Invalid input");
 		return;
 	}
 
+	
+	for (var i = 0; i < 81; i++) {
+		var currentCell = cells[i];
+
+		if (currentCell.element.children.length > 0) {
+			currentCell.setValue(parseInt(values.charAt(i)));
+
+			if (currentCell.value !== 0) {
+				currentCell.element.firstChild.value = currentCell.value;
+			} else {
+				currentCell.element.firstChild.value = "";
+			}
+		}
+	}
+	
+	clearPencilmarks();
 	highlight(0);
 	showDuplicates();
 }
@@ -314,10 +301,6 @@ function submitGivens() {
 
 		document.getElementById("top_bar").style.display = "none";
 		document.getElementById("begin_solving").style.display = "none";
-		// document.getElementById("submit_givens").style.display = "none";
-		// document.getElementById("paste_puzzle").style.display = "none";
-		// document.getElementById("solving_status").innerHTML = "Solving puzzle...";
-		// document.getElementById("solving_status").title = "Enter values to solve the puzzle.";
 		document.getElementById("controls").style.display = "block";
 		document.getElementById("grid_table").style.position = "static";
 		document.getElementById("grid_table").style.marginTop = "8px";
@@ -337,7 +320,7 @@ function submitGivens() {
 
 			if (currentCell.value !== 0) {
 				currentCell.element.innerHTML = currentCell.value;
-				currentCell.isGiven = true;;
+				currentCell.isGiven = true;
 			} else {
 				currentCell.element.classList.add("blank_cell_highlight_black");
 			}
@@ -381,11 +364,10 @@ function showSolution() {
 	
 	currentElement = window.solutionWindow.document.body.appendChild(document.createElement("div"));
 	
-	// alert(solution);
-	
 	currentElement.innerHTML = solution;
-	currentElement.style.fontFamily = "Consolas";
+	currentElement.style.fontFamily = "Consolas, Courier New, monospace";
 	currentElement.style.fontColor = "#666";
+	currentElement.style.fontSize = "15px";
 	
 	window.onunload = function() {
 		window.solutionWindow.close();
@@ -460,14 +442,8 @@ function setBlankCells(color) {
 		currentCell = cells[i];
 
 		if (currentCell.value === 0) {
-			currentCell.element.classList.remove("blank_cell_highlight_black");
-			currentCell.element.classList.remove("blank_cell_highlight_red");
-			currentCell.element.classList.remove("blank_cell_highlight_blue");
-			currentCell.element.classList.remove("blank_cell_highlight_green");
-			currentCell.element.classList.remove("blank_cell_highlight_purple");
-
-			currentCell.element.classList.add("blank_cell_highlight_" + color);
-			currentCell.color = cells.getColorIndex(color);
+			currentCell.setColor(color);
+			
 		}
 
 	}
@@ -480,7 +456,9 @@ function setBlankCells(color) {
 }
 
 function deleteColoredCells(color) {
-	if (!confirm("Are you sure you want to delete all cells marked " + color + "?")) {
+	var colorValueList = ["black", "blue", "red", "green", "purple"];
+	
+	if (!confirm("Are you sure you want to delete all cells marked " + colorValueList[color] + "?")) {
 		return;
 	}
 
@@ -489,15 +467,12 @@ function deleteColoredCells(color) {
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 
-		if (currentCell.value !== 0 && currentCell.element.classList.contains("blank_cell_highlight_" + color)) {
+		if (currentCell.value !== 0 && currentCell.getColor() === color) {
 			currentCell.element.firstChild.value = "";
 			currentCell.setValue(0);
-			currentCell.candidatesElement.innerHTML = currentCell.pencilmarks.map(function(value, index){if(value)return index + 1;}).join("");
+			currentCell.candidatesElement.innerHTML = currentCell.getPencilmarkString();
 
-			currentCell.element.classList.remove("blank_cell_highlight_" + color);
-
-			currentCell.element.classList.add("blank_cell_highlight_" + cells.blankCellColor);
-			currentCell.color = cells.getColorIndex(cells.blankCellColor);
+			currentCell.setColor(cells.blankCellColor);
 		}
 	}
 
@@ -518,7 +493,7 @@ window.onload = function() {
 		this.candidates = [];
 		this.pencilmarks = [true, true, true, true, true, true, true, true, true];
 		this.isGiven = false;
-		this.color = 0;
+		var color = 0;
 
 		var blocks = [
 			0, 0, 0, 1, 1, 1, 2, 2, 2,
@@ -590,7 +565,7 @@ window.onload = function() {
 			} else {
 				this.candidates = [value];
 			}
-		}
+		};
 
 		this.toString = function toString() {
 			return this.value + "";
@@ -605,8 +580,26 @@ window.onload = function() {
 			}
 			
 			return result;
-		}
+		};
+		
+		this.getColor = function() {
+			return color;
+		};
+		
+		this.setColor = function(value) {
+			var colorValueList = ["black", "blue", "red", "green", "purple"];
+			
+			color = value;
+			
+			this.element.classList.remove("blank_cell_highlight_black");
+			this.element.classList.remove("blank_cell_highlight_red");
+			this.element.classList.remove("blank_cell_highlight_blue");
+			this.element.classList.remove("blank_cell_highlight_green");
+			this.element.classList.remove("blank_cell_highlight_purple");
 
+			this.element.classList.add("blank_cell_highlight_" + colorValueList[color]);
+		};
+		
 		this.setValue(0);
 		
 		
@@ -672,20 +665,19 @@ window.onload = function() {
 
 	cells.lastSelectedCell = null;
 	cells.hints = 3;
-	cells.blankCellColor = "black";
+	cells.blankCellColor = 0;
 	
-	cells.getColorIndex = function(color) {
-		var colorIndexList = {"black":0, "blue":1, "red":2, "green":3, "purple": 4};
-		return colorIndexList[color];
-	}
+	// cells.getColorIndex = function(color) {
+		// var colorIndexList = {"black":0, "blue":1, "red":2, "green":3, "purple": 4};
+		// return colorIndexList[color];
+	// }
 	
-	cells.getColorValue = function(num) {
-		var colorValueList = ["black", "blue", "red", "green", "purple"];
-		return colorValueList[num];
-	}
+	// cells.getColorValue = function(num) {
+		// var colorValueList = ["black", "blue", "red", "green", "purple"];
+		// return colorValueList[num];
+	// }
 	
 	updatePencilmarks();
-	
 	
 	// var sideBar = document.body.appendChild(document.createElement("div"));
 	// var sideBarDragPos = 0;
@@ -718,4 +710,5 @@ window.onload = function() {
 	// currentElement = sideBar.appendChild(document.createElement("input"));
 	// currentElement.type = "text";
 	// currentElement.id = "paste_puzzle";
+	
 };

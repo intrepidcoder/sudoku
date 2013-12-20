@@ -573,8 +573,6 @@ function Puzzle(givens) {
 	};
 
 	
-	// Returns the solution that occurs first in lexicographical order to the puzzle if firstSolution is true.
-	// Otherwise returns the solution that occurs last in lexicographical order.
 	var solve = function solve(givens) {
 		var stack = [];
 		var values;
@@ -599,7 +597,6 @@ function Puzzle(givens) {
 			}
 		}
 
-		console.log("Returned givens.");
 		return givens;
 	};
 

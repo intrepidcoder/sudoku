@@ -24,20 +24,10 @@
 
 		<div id="controls">
 			<form name="controls_form">
-				<!-- <div class="small_header" id="solving_status" title="Enter the sudoku puzzle's clues and click SUBMIT CLUES to begin solving.">Entering Clues...</div> -->
 				<div class="small_header"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></div>
 				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
 				<!-- <div class="small_header"><a href="javascript:void(0);" title="Generate a text string that stores the current clues, values, and pencilmarks." onclick="savePuzzle();">Save</a></div> -->
 				<div class="small_header"><a href="javascript:void(0);" title="View options to save or load a sudoku puzzle." onclick="saveLoadPuzzle();">Save/Load</a></div>
-				<!-- <ul>
-					<li>
-						<input type="button" name="clear_cells" value="Clear cells" title="Delete all clues and values, reset pencil marks, and remove highlighting." onclick="clearCells();" />
-					</li><li>
-						<input type="button" name="submit_givens" id="submit_givens" value="Submit clues" title="Set all filled cells as read-only to enable guessing and hints." onclick="submitGivens();" />
-					</li><li>
-						<input type="button" name="paste_puzzle" id="paste_puzzle" value="Paste puzzle" title="Paste values to place into the puzzle. Note: this overwrites existing values." onclick="pastePuzzle();" />
-					</li>
-				</ul> -->
 
 				<div class="small_header">Cell Highlighting:</div>
 				<ul>
@@ -82,44 +72,23 @@
 				</ul>
 
 				<div class="small_header">Guessing tools:</div>
-<!-- 				<ul>
-					<li>
-						Mark blank cells:
-						<select title="Mark all blank cells a unique color so they can be deleted easily. This is useful for making guesses." onchange="this.style.color = this.value.toLowerCase(); setBlankCells(this.value.toLowerCase());">
-							<option selected="selected" style="color: black;">Black</option>
-							<option style="color: blue;">Blue</option>
-							<option style="color: red;">Red</option>
-							<option style="color: green;">Green</option>
-							<option style="color: purple;">Purple</option>
-						</select>
-					</li><li>
-						Delete cells marked:
-						<select title="Delete all cells marked a certain color." onchange="deleteColoredCells(this);">
-							<option selected="selected">Select Color</option>
-							<option style="color: black;">Black</option>
-							<option style="color: blue;">Blue</option>
-							<option style="color: red;">Red</option>
-							<option style="color: green;">Green</option>
-							<option style="color: purple;">Purple</option>
-						</select>
-					</li>
-				</ul> -->
+
 				<table id="guessing_tools_table">
 					<tbody>
 						<tr>
 							<td>Mark blank cells:</td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells('black');" style="color: black; background-color: #FF8;" id="mark_blank_cells_black" title="Mark all blank cells black so they can be deleted easily. This is useful for making guesses.">Black</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells('blue');" style="color: blue;" id="mark_blank_cells_blue" title="Mark all blank cells blue so they can be deleted easily. This is useful for making guesses.">Blue</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells('red');" style="color: red;" id="mark_blank_cells_red" title="Mark all blank cells red so they can be deleted easily. This is useful for making guesses.">Red</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells('green');" style="color: green;" id="mark_blank_cells_green" title="Mark all blank cells green so they can be deleted easily. This is useful for making guesses.">Green</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells('purple');" style="color: purple;" id="mark_blank_cells_purple" title="Mark all blank cells purple so they can be deleted easily. This is useful for making guesses.">Purple</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells(0);" style="color: black; background-color: #FF8;" id="mark_blank_cells_0" title="Mark all blank cells black so they can be deleted easily. This is useful for making guesses.">Black</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells(1);" style="color: blue;" id="mark_blank_cells_1" title="Mark all blank cells blue so they can be deleted easily. This is useful for making guesses.">Blue</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells(2);" style="color: red;" id="mark_blank_cells_2" title="Mark all blank cells red so they can be deleted easily. This is useful for making guesses.">Red</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells(3);" style="color: green;" id="mark_blank_cells_3" title="Mark all blank cells green so they can be deleted easily. This is useful for making guesses.">Green</a></td>
+							<td><a href="javascript:void(0);" onclick="setBlankCells(4);" style="color: purple;" id="mark_blank_cells_4" title="Mark all blank cells purple so they can be deleted easily. This is useful for making guesses.">Purple</a></td>
 						</tr><tr>
 							<td>Delete cells marked:</td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells('black');" style="color: black;" title="Delete all cells marked black.">Black</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells('blue');" style="color: blue;" title="Delete all cells marked blue.">Blue</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells('red');" style="color: red;" title="Delete all cells marked red.">Red</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells('green');" style="color: green;" title="Delete all cells marked green.">Green</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells('purple');" style="color: purple;" title="Delete all cells marked purple.">Purple</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells(0');" style="color: black;" title="Delete all cells marked black.">Black</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells(1);" style="color: blue;" title="Delete all cells marked blue.">Blue</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells(2);" style="color: red;" title="Delete all cells marked red.">Red</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells(3);" style="color: green;" title="Delete all cells marked green.">Green</a></td>
+							<td><a href="javascript:void(0);" onclick="deleteColoredCells(4);" style="color: purple;" title="Delete all cells marked purple.">Purple</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -147,43 +116,43 @@
 			
 			<div class="small_header">Paste Puzzle:</div>
 			<ul>
-				<li>Enter a sudoku puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. All other characters are ignored. This overwrites existing values.</li>
+				<li>Input a sudoku puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. This overwrites existing values.</li>
 				<li>
-					<input type="text" id="paste_puzzle" style="width: 300px;" title="Paste values to place into the puzzle. Note: this overwrites existing values."/>
-					<input type="button" id="paste_puzzle_button" value="Paste Puzzle" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values." />
+					<input type="text" id="paste_puzzle" style="width: 300px;" title="Paste values to place into the puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. All other characters are ignored. This overwrites existing values." onkeydown="if (event && event.keyCode === 13){pastePuzzle();}" />
+					<input type="button" id="paste_puzzle_button" value="Input Puzzle" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values." />
 				</li>
 			</ul>
 			
 			<div class="small_header">Copy Puzzle:</div>
 			<ul>
-				<li>Copy the current values of the sudoku puzzle as an 81 digit text string.</li>
+				<li>Here are the current values of the sudoku puzzle as an 81-digit text string:</li>
 				<li>
-				<input type="text" id="copy_puzzle" style="width: 300px;" title="Copy the current values of the sudoku puzzle." onclick="this.value = cells.toString().replace(/[^0-9]/g, ''); javascript:select();" />
+				<input type="text" id="copy_puzzle" style="width: 300px;" title="Copy the current values of the sudoku puzzle. Click to refresh." onclick="this.value = cells.toString().replace(/[^0-9]/g, ''); javascript:select();" />
 				</li>
 			</ul>
 
-			<div class="small_header">Export State:</div>
+			<div class="small_header">Import State:</div>
 			<ul>
-				<li>Copy this text string and paste it into a new text file to store the current state of the clues, values, and pencilmarks.</li>
+				<li>Reload a sudoku puzzle by pasting the text string below. This overwrites existing values.</li>
 				<li>
-				<input type="text" id="export_save" style="width: 300px;" title="This text string stores the current state of the clues, values, and pencilmarks." onclick="this.value = encode(); javascript:select();" />
+					<input type="text" id="import_save" style="width: 300px;" title="Reload an previous save. Note: this overwrites existing values." onkeydown="if (event && event.keyCode === 13){decode(this.value);}" />
+					<input type="button" value="Import Save" id="import_save_button" onclick="decode(document.getElementById('import_save').value);" title="Reload an previous save. Note: this overwrites existing values." />
 				</li>
 			</ul>
 			
-			<div class="small_header">Import State:</div>
+			<div class="small_header">Export State:</div>
 			<ul>
-				<li>Reload a saved sudoku puzzle by pasting the text string below.</li>
+				<li>Copy this text string and paste it into a new text file to store the value, pencilmarks, and color of each cell.</li>
 				<li>
-					<input type="text" id="import_save" style="width: 300px;" title="Reload an previous save. Note: this overwrites existing values."/>
-					<input type="button" value="Import Save" id="import_save_button" onclick="decode(document.getElementById('import_save').value);" title="Reload an previous save. Note: this overwrites existing values." />
+				<input type="text" id="export_save" style="width: 300px;" title="This text string stores the value, pencilmarks, and color of each cell. Click to refresh." onclick="this.value = encode(); javascript:select();" />
 				</li>
 			</ul>
 			
 			<div class="small_header">Save/Load Cookie:</div>
 			<ul>
 				<li>
-					<input type="button" value="Save to Cookie" id="save_cookie" onclick="saveToCookie();" title="Save the current state of the clues, values, and pencilmarks to a cookie."/>
-					<input type="button" value="Load from Cookie" id="load_cookie" onclick="loadFromCookie();" title="Load the sudoku puzzle saved to a cookie if one is present." />
+					<input type="button" value="Save to Cookie" id="save_cookie" onclick="saveToCookie();" title="Save the value, pencilmarks, and color of each cell to a cookie."/>
+					<input type="button" value="Load from Cookie" id="load_cookie" onclick="loadFromCookie();" title="Load the previously saved sudoku puzzle from the cookie if it exists." />
 				</li>
 			</ul>
 		</div>
