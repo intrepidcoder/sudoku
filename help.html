@@ -132,27 +132,33 @@
 	<h1>sudoku</h1>
 	<p>This is a simple web page that provides tools to help solve sudoku puzzles.</p>
 	<p>To access the web page, go to <a href="http://delta42.github.io/sudoku" style="color: rgb(65, 131, 196); text-decoration: none;">http://delta42.github.io/sudoku</a>.</p>
-	<p>Note: This web page does not save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.</p>
+	<p>Note: This web page does not automatically save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.</p>
 	<h2>Features:</h2>
 	<ul>
 		<li>Pencil marks</li>
 		<li>Cell highlighting based on pencil marks</li>
 		<li>Flag duplicate values</li>
 		<li>Show solution</li>
+		<li>Import sudoku puzzles.</li>
+		<li>Save/reload a sudoku puzzle using a cookie.</li>
 		<li>Hints</li>
 		<li>Mark guesses for quick removal</li>
 	</ul>
 	<h2>Instructions:</h2>
 	<ol>
-		<li>To begin, <strong>enter some values</strong>. Find a sudoku puzzle and input its values using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter values using the Paste puzzle link..</li>
-		<li><strong>Submit the values</strong> by clicking the begin solving link. This sets the values as read-only and enables several features.</li>
+		<li>To begin, <strong>enter some values</strong>. Find a sudoku puzzle and input its values using the number keys to insert values. The arrow keys, TAB, and ENTER can be used for navigation, while DELETE and BACKSPACE remove values. Alternatively enter values using the tools under the Save/Load sidebar.</li>
+		<li><strong>Submit the values</strong> by clicking the begin solving link. This sets the values as read-only and enables the solving tools.</li>
 		<li><strong>Solve the puzzle</strong> using pencil marks, cell highlighting, guesses, hints, and if all else fails, show solution.</li>
 	</ol>
 	<h2>Button/link descriptions:</h2>
 	<ul>
+		<li><strong>Begin solving</strong>: Sets the entered values as read-only clues and submits them to the puzzle solver. Once the values have been submitted, they cannot be changed. This generates a solution for the values and enables the solving features.</li>
+		<li><strong>Save/Load</strong>: Shows a panel with options to save a sudoku puzzle in progress or reload a previously saved puzzle.</li>
+		<li><strong>Save/Load>Input Puzzle</strong>: Allows values to be inputted from the clipboard. This overwrites existing values. Zeros, "*", ".", or "_" can be used as placeholders for empty cells. All other characters are ignored. There must be exactly 81 numbers for this to work properly.</li>
+		<li><strong>Save/Load>Import State</strong>: Paste a text string copied from <strong>export state</strong> to reload the state of the puzzle when the text string was copied. This overwrites existing values.</li>
+		<li><strong>Save/Load>Save to Cookie</strong>: This saves the values, pencilmarks, and cell number coloring to a cookie. Cookies must be enabled in the browser.</li>
+		<li><strong>Save/Load>Load from Cookie</strong>: If a previously saved cookie exists, this reloads the values, pencilmarks, and cell number coloring stored in the cookie. Overwrites existing values.</li>
 		<li><strong>Clear cells</strong>: Deletes all values, resets pencil marks, and removes all highlighting. This resets the page to its initial state.</li>
-		<li><strong>Begin solving</strong>: Sets the entered values as read-only and submits them to the puzzle solver. Once the values have been submitted, they cannot be changed. This generates a solution for the values and enables the solving features.</li>
-		<li><strong>Paste puzzle</strong>: Allows values to be inputted from the clipboard. This overwrites existing values. Zeros can be used as placeholders for empty cells. Characters other than 0-9 are ignored. There must be exactly 81 numbers for this to work properly.</li>
 		<li><strong>1-9</strong>: Highlights all cells that do not have a pencil mark of 1-9 a pale green color. If the pencil marks have been updated, this can be used to easily determine which cells do not have a value of 1-9. Does not update automatically.</li>
 		<li><strong>Clear</strong>: Removes all cell highlighting.</li>
 		<li><strong>Enter values</strong>: When this option is selected, typing a number in a cell changes its value.</li>
@@ -163,7 +169,7 @@
 		<li><strong>Show duplicates</strong>: When this option is enabled, neighboring cells with the same value are flagged red.</li>
 		<li><strong>Mark blank cells (color)</strong>: Marks all blank cells with a certain color. Use this to make guesses so that if the guess is incorrect, all values entered afterward can be removed easily.</li>
 		<li><strong>Delete cells marked (color)</strong>: Deletes all cells that have been marked a certain color. Does not affect cells marked a different color or pencil marks.</li>
-		<li><strong>Show solution</strong>: When this option is enabled, the puzzle's solution will be shown. Does not affect cell values or pencil marks.</li>
+		<li><strong>Show solution</strong>: This opens the sudoku puzzle's solution in a new window. If there are more than one solution, only one will be displayed.</li>
 		<li><strong>Hint</strong>: Gives a hint for cell that was last selected, up to three hints. Hints are based on the solution.</li>
 	</ul>
 </body>
