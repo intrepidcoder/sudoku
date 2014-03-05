@@ -1,7 +1,7 @@
 #sudoku
 This is a simple web page that provides tools to help solve sudoku puzzles.
 
-To access the web page, go to http://delta42.github.io/sudoku.
+To access the web page, go to http://intrepidcoder.com/projects/sudoku.
 
 Note: This web page does not automatically save any entered values or pencilmarks. Refreshing or navigating away from it will reset the page to its initial state without warning.
 
