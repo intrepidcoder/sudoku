@@ -2,125 +2,275 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-		<script type="text/javascript" language="JavaScript" src="Puzzle.js"></script>
-		<script type="text/javascript" language="JavaScript" src="Sudoku.js"></script>
-		<script type="text/javascript" language="JavaScript" src="Encoding.js"></script>
-		<link rel="stylesheet" type="text/css" href="Sudoku.css" />
+		<meta name="viewport" content="width=540,user-scalable=no,minimal-ui" />
+
+		<script type="text/javascript" src="puzzle.js"></script>
+		<script type="text/javascript" src="sudoku.js"></script>
+		<script type="text/javascript" src="encoding.js"></script>
+		<link rel="stylesheet" type="text/css" href="sudoku.css" />
 		<title>Sudoku</title>
 	</head>
 
 	<body>
-		<div id="top_bar">
-			<ul>
-				<li>To begin, find a sudoku puzzle and input its values below.</li>
-				<li style="float: right;"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></li>
-				<li style="float: right;" id="load_puzzle"><a href="javascript:void(0);" onclick="saveLoadPuzzle();" title="View options to save or load a sudoku puzzle.">Save/Load</a></li>
-			</ul>
-		</div>
+		<p id="directions">To begin, find a sudoku puzzle and input its values.</p>
+		<p id="noscript">JavaScript must be enabled for the sudoku solver to work.</p>
+		
+		<div id="content">
+			<table id="grid_table">
+				<tbody>
+					<tr>
+						<td class="cell cell_top_border cell_left_border" id="cell0"><input type="text" id="cell0_input" class="input" tabindex="1" /></td>
+						<td class="cell cell_top_border" id="cell1"><input type="text" id="cell1_input" class="input" tabindex="2" /></td>
+						<td class="cell cell_top_border" id="cell2"><input type="text" id="cell2_input" class="input" tabindex="3" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell3"><input type="text" id="cell3_input" class="input" tabindex="4" /></td>
+						<td class="cell cell_top_border" id="cell4"><input type="text" id="cell4_input" class="input" tabindex="5" /></td>
+						<td class="cell cell_top_border" id="cell5"><input type="text" id="cell5_input" class="input" tabindex="6" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell6"><input type="text" id="cell6_input" class="input" tabindex="7" /></td>
+						<td class="cell cell_top_border" id="cell7"><input type="text" id="cell7_input" class="input" tabindex="8" /></td>
+						<td class="cell cell_top_border cell_right_border" id="cell8"><input type="text" id="cell8_input" class="input" tabindex="9" /></td>
+					</tr><tr>
+						<td id="candidates0" class="candidates cell_left_border">123456789</td>
+						<td id="candidates1" class="candidates">123456789</td>
+						<td id="candidates2" class="candidates">123456789</td>
+						<td id="candidates3" class="candidates cell_left_border">123456789</td>
+						<td id="candidates4" class="candidates">123456789</td>
+						<td id="candidates5" class="candidates">123456789</td>
+						<td id="candidates6" class="candidates cell_left_border">123456789</td>
+						<td id="candidates7" class="candidates">123456789</td>
+						<td id="candidates8" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell9"><input type="text" id="cell9_input" class="input" tabindex="10" /></td>
+						<td class="cell" id="cell10"><input type="text" id="cell10_input" class="input" tabindex="11" /></td>
+						<td class="cell" id="cell11"><input type="text" id="cell11_input" class="input" tabindex="12" /></td>
+						<td class="cell cell_left_border" id="cell12"><input type="text" id="cell12_input" class="input" tabindex="13" /></td>
+						<td class="cell" id="cell13"><input type="text" id="cell13_input" class="input" tabindex="14" /></td>
+						<td class="cell" id="cell14"><input type="text" id="cell14_input" class="input" tabindex="15" /></td>
+						<td class="cell cell_left_border" id="cell15"><input type="text" id="cell15_input" class="input" tabindex="16" /></td>
+						<td class="cell" id="cell16"><input type="text" id="cell16_input" class="input" tabindex="17" /></td>
+						<td class="cell cell_right_border" id="cell17"><input type="text" id="cell17_input" class="input" tabindex="18" /></td>
+					</tr><tr>
+						<td id="candidates9" class="candidates cell_left_border">123456789</td>
+						<td id="candidates10" class="candidates">123456789</td>
+						<td id="candidates11" class="candidates">123456789</td>
+						<td id="candidates12" class="candidates cell_left_border">123456789</td>
+						<td id="candidates13" class="candidates">123456789</td>
+						<td id="candidates14" class="candidates">123456789</td>
+						<td id="candidates15" class="candidates cell_left_border">123456789</td>
+						<td id="candidates16" class="candidates">123456789</td>
+						<td id="candidates17" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell18"><input type="text" id="cell18_input" class="input" tabindex="19" /></td>
+						<td class="cell" id="cell19"><input type="text" id=
+						"cell19_input" class="input" tabindex="20" /></td>
+						<td class="cell" id="cell20"><input type="text" id="cell20_input" class="input" tabindex="21" /></td>
+						<td class="cell cell_left_border" id="cell21"><input type="text" id="cell21_input" class="input" tabindex="22" /></td>
+						<td class="cell" id="cell22"><input type="text" id="cell22_input" class="input" tabindex="23" /></td>
+						<td class="cell" id="cell23"><input type="text" id="cell23_input" class="input" tabindex="24" /></td>
+						<td class="cell cell_left_border" id="cell24"><input type="text" id="cell24_input" class="input" tabindex="25" /></td>
+						<td class="cell" id="cell25"><input type="text" id="cell25_input" class="input" tabindex="26" /></td>
+						<td class="cell cell_right_border" id="cell26"><input type="text" id="cell26_input" class="input" tabindex="27" /></td>
+					</tr><tr>
+						<td id="candidates18" class="candidates cell_left_border">123456789</td>
+						<td id="candidates19" class="candidates">123456789</td>
+						<td id="candidates20" class="candidates">123456789</td>
+						<td id="candidates21" class="candidates cell_left_border">123456789</td>
+						<td id="candidates22" class="candidates">123456789</td>
+						<td id="candidates23" class="candidates">123456789</td>
+						<td id="candidates24" class="candidates cell_left_border">123456789</td>
+						<td id="candidates25" class="candidates">123456789</td>
+						<td id="candidates26" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_top_border cell_left_border" id="cell27"><input type="text" id="cell27_input" class="input" tabindex="28" /></td>
+						<td class="cell cell_top_border" id="cell28"><input type="text" id="cell28_input" class="input" tabindex="29" /></td>
+						<td class="cell cell_top_border" id="cell29"><input type="text" id="cell29_input" class="input" tabindex="30" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell30"><input type="text" id="cell30_input" class="input" tabindex="31" /></td>
+						<td class="cell cell_top_border" id="cell31"><input type="text" id="cell31_input" class="input" tabindex="32" /></td>
+						<td class="cell cell_top_border" id="cell32"><input type="text" id="cell32_input" class="input" tabindex="33" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell33"><input type="text" id="cell33_input" class="input" tabindex="34" /></td>
+						<td class="cell cell_top_border" id="cell34"><input type="text" id="cell34_input" class="input" tabindex="35" /></td>
+						<td class="cell cell_top_border cell_right_border" id="cell35"><input type="text" id="cell35_input" class="input" tabindex="36" /></td>
+					</tr><tr>
+						<td id="candidates27" class="candidates cell_left_border">123456789</td>
+						<td id="candidates28" class="candidates">123456789</td>
+						<td id="candidates29" class="candidates">123456789</td>
+						<td id="candidates30" class="candidates cell_left_border">123456789</td>
+						<td id="candidates31" class="candidates">123456789</td>
+						<td id="candidates32" class="candidates">123456789</td>
+						<td id="candidates33" class="candidates cell_left_border">123456789</td>
+						<td id="candidates34" class="candidates">123456789</td>
+						<td id="candidates35" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell36"><input type="text" id="cell36_input" class="input" tabindex="37" /></td>
+						<td class="cell" id="cell37"><input type="text" id="cell37_input" class="input" tabindex="38" /></td>
+						<td class="cell" id="cell38"><input type="text" id="cell38_input" class="input" tabindex="39" /></td>
+						<td class="cell cell_left_border" id="cell39"><input type="text" id="cell39_input" class="input" tabindex="40" /></td>
+						<td class="cell" id="cell40"><input type="text" id="cell40_input" class="input" tabindex="41" /></td>
+						<td class="cell" id="cell41"><input type="text" id="cell41_input" class="input" tabindex="42" /></td>
+						<td class="cell cell_left_border" id="cell42"><input type="text" id="cell42_input" class="input" tabindex="43" /></td>
+						<td class="cell" id="cell43"><input type="text" id="cell43_input" class="input" tabindex="44" /></td>
+						<td class="cell cell_right_border" id="cell44"><input type="text" id="cell44_input" class="input" tabindex="45" /></td>
+					</tr><tr>
+						<td id="candidates36" class="candidates cell_left_border">123456789</td>
+						<td id="candidates37" class="candidates">123456789</td>
+						<td id="candidates38" class="candidates">123456789</td>
+						<td id="candidates39" class="candidates cell_left_border">123456789</td>
+						<td id="candidates40" class="candidates">123456789</td>
+						<td id="candidates41" class="candidates">123456789</td>
+						<td id="candidates42" class="candidates cell_left_border">123456789</td>
+						<td id="candidates43" class="candidates">123456789</td>
+						<td id="candidates44" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell45"><input type="text" id="cell45_input" class="input" tabindex="46" /></td>
+						<td class="cell" id="cell46"><input type="text" id="cell46_input" class="input" tabindex="47" /></td>
+						<td class="cell" id="cell47"><input type="text" id="cell47_input" class="input" tabindex="48" /></td>
+						<td class="cell cell_left_border" id="cell48"><input type="text" id="cell48_input" class="input" tabindex="49" /></td>
+						<td class="cell" id="cell49"><input type="text" id="cell49_input" class="input" tabindex="50" /></td>
+						<td class="cell" id="cell50"><input type="text" id="cell50_input" class="input" tabindex="51" /></td>
+						<td class="cell cell_left_border" id="cell51"><input type="text" id="cell51_input" class="input" tabindex="52" /></td>
+						<td class="cell" id="cell52"><input type="text" id="cell52_input" class="input" tabindex="53" /></td>
+						<td class="cell cell_right_border" id="cell53"><input type="text" id="cell53_input" class="input" tabindex="54" /></td>
+					</tr><tr>
+						<td id="candidates45" class="candidates cell_left_border">123456789</td>
+						<td id="candidates46" class="candidates">123456789</td>
+						<td id="candidates47" class="candidates">123456789</td>
+						<td id="candidates48" class="candidates cell_left_border">123456789</td>
+						<td id="candidates49" class="candidates">123456789</td>
+						<td id="candidates50" class="candidates">123456789</td>
+						<td id="candidates51" class="candidates cell_left_border">123456789</td>
+						<td id="candidates52" class="candidates">123456789</td>
+						<td id="candidates53" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_top_border cell_left_border" id="cell54"><input type="text" id="cell54_input" class="input" tabindex="55" /></td>
+						<td class="cell cell_top_border" id="cell55"><input type="text" id="cell55_input" class="input" tabindex="56" /></td>
+						<td class="cell cell_top_border" id="cell56"><input type="text" id="cell56_input" class="input" tabindex="57" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell57"><input type="text" id="cell57_input" class="input" tabindex="58" /></td>
+						<td class="cell cell_top_border" id="cell58"><input type="text" id="cell58_input" class="input" tabindex="59" /></td>
+						<td class="cell cell_top_border" id="cell59"><input type="text" id="cell59_input" class="input" tabindex="60" /></td>
+						<td class="cell cell_top_border cell_left_border" id="cell60"><input type="text" id="cell60_input" class="input" tabindex="61" /></td>
+						<td class="cell cell_top_border" id="cell61"><input type="text" id="cell61_input" class="input" tabindex="62" /></td>
+						<td class="cell cell_top_border cell_right_border" id="cell62"><input type="text" id="cell62_input" class="input" tabindex="63" /></td>
+					</tr><tr>
+						<td id="candidates54" class="candidates cell_left_border">123456789</td>
+						<td id="candidates55" class="candidates">123456789</td>
+						<td id="candidates56" class="candidates">123456789</td>
+						<td id="candidates57" class="candidates cell_left_border">123456789</td>
+						<td id="candidates58" class="candidates">123456789</td>
+						<td id="candidates59" class="candidates">123456789</td>
+						<td id="candidates60" class="candidates cell_left_border">123456789</td>
+						<td id="candidates61" class="candidates">123456789</td>
+						<td id="candidates62" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell63"><input type="text" id="cell63_input" class="input" tabindex="64" /></td>
+						<td class="cell" id="cell64"><input type="text" id="cell64_input" class="input" tabindex="65" /></td>
+						<td class="cell" id="cell65"><input type="text" id="cell65_input" class="input" tabindex="66" /></td>
+						<td class="cell cell_left_border" id="cell66"><input type="text" id="cell66_input" class="input" tabindex="67" /></td>
+						<td class="cell" id="cell67"><input type="text" id="cell67_input" class="input" tabindex="68" /></td>
+						<td class="cell" id="cell68"><input type="text" id="cell68_input" class="input" tabindex="69" /></td>
+						<td class="cell cell_left_border" id="cell69"><input type="text" id="cell69_input" class="input" tabindex="70" /></td>
+						<td class="cell" id="cell70"><input type="text" id="cell70_input" class="input" tabindex="71" /></td>
+						<td class="cell cell_right_border" id="cell71"><input type="text" id="cell71_input" class="input" tabindex="72" /></td>
+					</tr><tr>
+						<td id="candidates63" class="candidates cell_left_border">123456789</td>
+						<td id="candidates64" class="candidates">123456789</td>
+						<td id="candidates65" class="candidates">123456789</td>
+						<td id="candidates66" class="candidates cell_left_border">123456789</td>
+						<td id="candidates67" class="candidates">123456789</td>
+						<td id="candidates68" class="candidates">123456789</td>
+						<td id="candidates69" class="candidates cell_left_border">123456789</td>
+						<td id="candidates70" class="candidates">123456789</td>
+						<td id="candidates71" class="candidates cell_right_border">123456789</td>
+					</tr><tr>
+						<td class="cell cell_left_border" id="cell72"><input type="text" id="cell72_input" class="input" tabindex="73" /></td>
+						<td class="cell" id="cell73"><input type="text" id="cell73_input" class="input" tabindex="74" /></td>
+						<td class="cell" id="cell74"><input type="text" id="cell74_input" class="input" tabindex="75" /></td>
+						<td class="cell cell_left_border" id="cell75"><input type="text" id="cell75_input" class="input" tabindex="76" /></td>
+						<td class="cell" id="cell76"><input type="text" id="cell76_input" class="input" tabindex="77" /></td>
+						<td class="cell" id="cell77"><input type="text" id="cell77_input" class="input" tabindex="78" /></td>
+						<td class="cell cell_left_border" id="cell78"><input type="text" id="cell78_input" class="input" tabindex="79" /></td>
+						<td class="cell" id="cell79"><input type="text" id="cell79_input" class="input" tabindex="80" /></td>
+						<td class="cell cell_right_border" id="cell80"><input type="text" id="cell80_input" class="input" tabindex="81" /></td>
+					</tr><tr>
+						<td id="candidates72" class="candidates cell_bottom_border cell_left_border">123456789</td>
+						<td id="candidates73" class="candidates cell_bottom_border">123456789</td>
+						<td id="candidates74" class="candidates cell_bottom_border">123456789</td>
+						<td id="candidates75" class="candidates cell_bottom_border cell_left_border">123456789</td>
+						<td id="candidates76" class="candidates cell_bottom_border">123456789</td>
+						<td id="candidates77" class="candidates cell_bottom_border">123456789</td>
+						<td id="candidates78" class="candidates cell_bottom_border cell_left_border">123456789</td>
+						<td id="candidates79" class="candidates cell_bottom_border">123456789</td>
+						<td id="candidates80" class="candidates cell_bottom_border cell_right_border">123456789</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div id="begin_solving_button" class="control" title="Submit the entered numbers as clues and begin solving the sudoku puzzle.">Begin Solving</div>
+			<div id="options"> 
+				<div class="control_label">Options</div>
+				<div id="help_about" class="control"><a href="help.html" title="Open the documentation page.">Help/About</a></div>
+				<div id="clear_cells" class="control"><a href="javascript:void(0);" title="Delete all cell values, reset pencilmarks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
+				<div id="save_load" class="control"><a href="javascript:void(0);" title="View options to save or load a sudoku puzzle.">Save/Load</a></div>
+			</div>
 
-		<table id="grid_table">
-			<tbody></tbody>
-		</table>
+		</div>
 
 		<div id="controls">
-			<form name="controls_form">
-				<div class="small_header"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></div>
-				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
-				<div class="small_header"><a href="javascript:void(0);" title="View options to save or load a sudoku puzzle." onclick="saveLoadPuzzle();">Save/Load</a></div>
+			<div class="control_label">Input Mode</div>
+			<div id="enter_values" class="control enter_controls enter_controls_selected" title="Enter values by clicking on a cell and typing the desired value.">Enter Values</div>
+			<div id="enter_pencilmarks" class="control enter_controls" title="Enter pencilmarks by clicking on a cell and typing to insert or delete the desired pencilmark.">Enter Pencilmarks</div>
 
-				<div class="small_header">Cell Highlighting:</div>
-				<ul>
-					<li>
-						<input type="button" name="highlight_ones" value="1" class="highlight_button" title="Highlight all cells that do not have a pencil mark of one." onclick="highlight(1);" />
-						<input type="button" name="highlight_twos" value="2" class="highlight_button" title="Highlight all cells that do not have a pencil mark of two." onclick="highlight(2);" />
-						<input type="button" name="highlight_threes" value="3" class="highlight_button" title="Highlight all cells that do not have a pencil mark of three." onclick="highlight(3);" />
-						<input type="button" name="highlight_fours" value="4" class="highlight_button" title="Highlight all cells that do not have a pencil mark of four." onclick="highlight(4);" />
-						<input type="button" name="highlight_fives" value="5" class="highlight_button" title="Highlight all cells that do not have a pencil mark of five." onclick="highlight(5);" />
-						<input type="button" name="highlight_sixes" value="6" class="highlight_button" title="Highlight all cells that do not have a pencil mark of six." onclick="highlight(6);" />
-						<input type="button" name="highlight_sevens" value="7" class="highlight_button" title="Highlight all cells that do not have a pencil mark of seven." onclick="highlight(7);" />
-						<input type="button" name="highlight_eights" value="8" class="highlight_button" title="Highlight all cells that do not have a pencil mark of eight." onclick="highlight(8);" />
-						<input type="button" name="highlight_nines" value="9" class="highlight_button" title="Highlight all cells that do not have a pencil mark of nine." onclick="highlight(9);" />
-						<input type="button" name="highlight_none" value="Clear" class="highlight_button" title="Clear all highlighting." onclick="highlight(0);" />
-					</li>
-				</ul>
+			<div class="control_label">Pencilmark based highlighting</div>
+			<div id="highlight_1" class="highlight_button" title="Highlight all cells that do not have a pencilmark of one.">1</div>
+			<div id="highlight_2" class="highlight_button" title="Highlight all cells that do not have a pencilmark of two.">2</div>
+			<div id="highlight_3" class="highlight_button" title="Highlight all cells that do not have a pencilmark of three.">3</div>
+			<div id="highlight_4" class="highlight_button" title="Highlight all cells that do not have a pencilmark of four.">4</div>
+			<div id="highlight_5" class="highlight_button" title="Highlight all cells that do not have a pencilmark of five.">5</div>
+			<div id="highlight_6" class="highlight_button" title="Highlight all cells that do not have a pencilmark of six.">6</div>
+			<div id="highlight_7" class="highlight_button" title="Highlight all cells that do not have a pencilmark of seven.">7</div>
+			<div id="highlight_8" class="highlight_button" title="Highlight all cells that do not have a pencilmark of eight.">8</div>
+			<div id="highlight_9" class="highlight_button" title="Highlight all cells that do not have a pencilmark of nine.">9</div>
+			<div id="highlight_0" class="highlight_button" title="Clear all highlighting.">Clear</div>
 
-				<div class="small_header">Pencil Marks:</div>
-				<ul>
-					<li>
-						<input type="radio" name="write_mode" value="values" id="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." checked="checked" selected="selected" />
-						<label for="write_mode_values" title="Enter values by clicking on a cell and typing the desired value." >Enter values.</label>
-					</li><li>
-						<input type="radio" name="write_mode" value="pencilmarks" id="write_mode_pencilmarks" title="Enter pencil marks by clicking on a cell and typing to insert or delete the desired pencil mark." />
-						<label for="write_mode_pencilmarks" title="Enter pencil marks by clicking on a cell and typing to insert or delete the desired pencil mark.">Enter pencil marks.</label>
-					</li><li>
-						<input type="checkbox" name="auto_pencilmarks" checked="checked" id="auto_pencilmarks" title="Automatically remove pencil marks when cells are filled." />
-						<label for="auto_pencilmarks" title="Automatically remove pencil marks when cells are filled.">Automatically remove pencil marks.<label>
-					</li><li>
-						<input type="button" name="update_pencilmarks" value="Update" title="Change pencil marks to reflect the current values." onclick="updatePencilmarks();" />
-						<input type="button" name="reset_pencilmarks" value="Reset" title="Add all pencil marks to empty cells." onclick="clearPencilmarks();" />
-					</li>
-				</ul>
+			<div id="pencilmarks_label" class="control_label">Pencilmark Tools</div>
+			<div id="auto_pencilmarks_label" class="control_label">Automatically Remove Pencilmarks</div>
+			<div id="update_pencilmarks" class="control" title="Change pencilmarks to reflect the current values.">Update</div>
+			<div id="reset_pencilmarks" class="control" title="Add all pencilmarks to empty cells regardless of the current values.">Reset</div>
+			<div id="auto_pencilmarks" class="control auto_pencilmarks_selected" title="Automatically remove pencilmarks when cells are filled.">On</div>
 
-				<div class="small_header">Validation:</div>
-				<ul>
-					<li>
-						<input type="checkbox" name="show_duplicates" checked="checked" id="show_duplicates" title="Highlight duplicate values." onclick="showDuplicates();" />
-						<label for="show_duplicates" title="Highlight duplicate values red.">Show duplicates.<label>
-					</li>
-					<li></li>
-				</ul>
+			<div class="control_label">Color Blank Cells (Useful for Trial-and-Error)</div>
+			<div id="mark_blank_cells_0" class="control mark_blank_cells mark_blank_cells_selected" title="Mark all blank cells black so they can be deleted easily. This is useful for making guesses.">Black</div>
+			<div id="mark_blank_cells_1" class="control mark_blank_cells" title="Mark all blue cells blue so they can be deleted easily. This is useful for making guesses.">Blue</div>
+			<div id="mark_blank_cells_2" class="control mark_blank_cells" title="Mark all blue cells red so they can be deleted easily. This is useful for making guesses.">Red</div>
+			<div id="mark_blank_cells_3" class="control mark_blank_cells" title="Mark all blue cells green so they can be deleted easily. This is useful for making guesses.">Green</div>
+			<div id="mark_blank_cells_4" class="control mark_blank_cells" title="Mark all blue cells purple so they can be deleted easily. This is useful for making guesses.">Purple</div>
 
-				<div class="small_header">Guessing tools:</div>
-
-				<table id="guessing_tools_table">
-					<tbody>
-						<tr>
-							<td>Mark blank cells:</td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells(0);" style="color: black; background-color: #FF8;" id="mark_blank_cells_0" title="Mark all blank cells black so they can be deleted easily. This is useful for making guesses.">Black</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells(1);" style="color: blue;" id="mark_blank_cells_1" title="Mark all blank cells blue so they can be deleted easily. This is useful for making guesses.">Blue</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells(2);" style="color: red;" id="mark_blank_cells_2" title="Mark all blank cells red so they can be deleted easily. This is useful for making guesses.">Red</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells(3);" style="color: green;" id="mark_blank_cells_3" title="Mark all blank cells green so they can be deleted easily. This is useful for making guesses.">Green</a></td>
-							<td><a href="javascript:void(0);" onclick="setBlankCells(4);" style="color: purple;" id="mark_blank_cells_4" title="Mark all blank cells purple so they can be deleted easily. This is useful for making guesses.">Purple</a></td>
-						</tr><tr>
-							<td>Delete cells marked:</td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells(0');" style="color: black;" title="Delete all cells marked black.">Black</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells(1);" style="color: blue;" title="Delete all cells marked blue.">Blue</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells(2);" style="color: red;" title="Delete all cells marked red.">Red</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells(3);" style="color: green;" title="Delete all cells marked green.">Green</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteColoredCells(4);" style="color: purple;" title="Delete all cells marked purple.">Purple</a></td>
-						</tr>
-					</tbody>
-				</table>
-
-				<div class="small_header">Solution/Hints:</div>
-				<ul>
-					<li>
-						<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label> -->
-						<input type="button" name="show_solution" id="show_solution" value="Show Solution" title="Show the solution to the sudoku puzzle in a new window." onclick="showSolution();" />
-					</li><li>
-						<input type="button" name="get_hint" id="get_hint" value="Hint (3)" title="Give a hint for the selected cell. There are three hints remaining." onclick="getHint();" />
-					</li>
-					</ul>
-
-			</form>
+			<div class="control_label">Clear Colored Cells</div>
+			<div id="delete_cells_0" class="control delete_cells" title="Delete all cells marked black.">Black</div>
+			<div id="delete_cells_1" class="control delete_cells" title="Delete all cells marked blue.">Blue</div>
+			<div id="delete_cells_2" class="control delete_cells" title="Delete all cells marked red.">Red</div>
+			<div id="delete_cells_3" class="control delete_cells" title="Delete all cells marked green.">Green</div>
+			<div id="delete_cells_4" class="control delete_cells" title="Delete all cells marked purple.">Purple</div>
+			
+			<div class="control_label">Cell Validation - Highlight Duplicate Values</div>
+			<div id="show_duplicates" class="control show_duplicates show_duplicates_selected" title="Highlight duplicate values red.">On</div>
+			
+			<div class="control_label">Solution/Hints</div>
+			<div id="show_solution" class="control" title="Show the solution to the sudoku puzzle in a new window.">Show Solution</div>
+			<div id="get_hint" class="control" title="Give a hint for the selected cell. There are three hints remaining.">Hint (3)</div>
+			
 		</div>
 
-		<div id="begin_solving">
-			<input type="button" value="Begin Solving" id="begin_solving_button" class="large_button" title="Submit the entered numbers as clues and begin solving the sudoku puzzle." onclick="submitGivens();" onmouseover="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmousedown="this.classList.add('large_button_hover'); this.classList.remove('large_button');" onmouseout="this.classList.add('large_button'); this.classList.remove('large_button_hover');" />
-		</div>
-		
 		<div id="side_bar">
 			<div id="side_bar_close"><a href="javascript:void(0);" onclick="document.getElementById('side_bar').style.display='none';">Close</a></div>
-			
+
 			<div class="small_header">Paste Puzzle:</div>
 			<ul>
 				<li>Input a sudoku puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. This overwrites existing values.</li>
 				<li>
-					<input type="text" id="paste_puzzle" style="width: 300px;" title="Paste values to place into the puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. All other characters are ignored. This overwrites existing values." onkeydown="if (event && event.keyCode === 13){pastePuzzle();}" />
+					<input type="text" id="paste_puzzle" style="width: 300px;" title="Paste values to place into the puzzle. Use &quot;0&quot;, &quot;.&quot;, &quot;*&quot;, or &quot;_&quot; for empty cells. All other characters are ignored. This overwrites existing values." />
 					<input type="button" id="paste_puzzle_button" value="Input Puzzle" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values." />
 				</li>
 			</ul>
-			
+
 			<div class="small_header">Copy Puzzle:</div>
 			<ul>
 				<li>Here are the current values of the sudoku puzzle as an 81-digit text string:</li>
@@ -133,11 +283,11 @@
 			<ul>
 				<li>Reload a sudoku puzzle by pasting the text string below. This overwrites existing values.</li>
 				<li>
-					<input type="text" id="import_save" style="width: 300px;" title="Reload an previous save. Note: this overwrites existing values." onkeydown="if (event && event.keyCode === 13){decode(this.value);}" />
+					<input type="text" id="import_save" style="width: 300px;" title="Reload an previous save. Note: this overwrites existing values." />
 					<input type="button" value="Import Save" id="import_save_button" onclick="decode(document.getElementById('import_save').value);" title="Reload an previous save. Note: this overwrites existing values." />
 				</li>
 			</ul>
-			
+
 			<div class="small_header">Export State:</div>
 			<ul>
 				<li>Copy this text string and paste it into a new text file to store the value, pencilmarks, and color of each cell.</li>
@@ -145,7 +295,7 @@
 				<input type="text" id="export_save" style="width: 300px;" title="This text string stores the value, pencilmarks, and color of each cell. Click to refresh." onclick="this.value = encode(); javascript:select();" />
 				</li>
 			</ul>
-			
+
 			<div class="small_header">Save/Load Cookie:</div>
 			<ul>
 				<li>

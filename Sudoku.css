@@ -1,14 +1,11 @@
 body {
 	margin: 0px;
+	min-width: 540px;
 }
 
 td
 {
 	white-space: nowrap;
-}
-
-form {
-	margin: 0px;
 }
 
 ul {
@@ -23,150 +20,178 @@ a:active {
 	color: red;
 }
 
-#top_bar {
-	background-color: #FFA;
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 10pt;
-	height: 22px;
-	left: 0px;
-	position: absolute;
-	top: 0px;
-	width: 100%;
-	min-width: 675px;
-}
-
-#top_bar ul {
-	margin: 0px;
-	padding: 0px;
-}
-
-#top_bar li {
+#content {
+	clear: left;
 	float: left;
-	margin: 3px 10px;
+	margin-left: 2px;
+	width: 536px;
 }
 
-#top_bar a {
-	font-size: 10pt;
+#difficulty {
+	width: 536px;
+	height: 41px;
+	margin: 0px 2px;
+}
+
+#controls {
+	float: left;
+	height: 590px;
+	margin: 2px 2px 0px 2px;
+	width: 536px;
 }
 
 #grid_table {
 	border-collapse: collapse;
 	border-spacing: 0px;
-	float: left;
+	clear: both;
 	height: 551px;
-	left: 8px;
-	margin: 0px;
-	position: absolute;
-	top: 22px;
+	margin-top: 2px;
+	max-width: 536px;
+	min-width: 536px;
 	width: 536px;
 }
 
-#controls {
-	border-style: solid;
-	border-width: 2px;
-	display: none;
-	position: absolute;
-	top: 8px;
-	left: 552px;
-	width: 425px;
+#directions {
+	background-color: #FFA;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	height: 18px;
+	line-height: 18px;
+	margin: 0px;
+	min-width: 531px;
+	padding-left: 5px;
+	width: 100%;
 }
 
-#begin_solving {
-	/* border-style: solid; */
-	/* border-width: 2px; */
-	position: absolute;
-	top: 42px;
-	left: 564px;
+#noscript {
+	background-color: #FFA;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 13px;
+	height: 18px;
+	line-height: 18px;
+	margin: 0px;
+	min-width: 536px;
+	padding: 0px 5px;
+	width: 100%;
 }
 
 #begin_solving_button {
-	padding: 0px;
-	cursor: pointer;
-	text-align: center;
-	font-family: arial, sans-serif;
-	color: white;
-	font-weight: bold;
-	font-size: 15px;
-	border: 1px solid blue;
+	background-color: #2B69C7;
 	border-radius: 5px;
-	height: 30px;
-	width: 150px;
-	margin: 0px;
+	color: white;
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	height: 50px;
+	line-height: 50px;
+	margin: 20px 0px;
+	text-align: center;
+	width: 536px;
 }
 
-#controls ul {
-	margin-top: 10px;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 0px;
+#begin_solving_button:hover {
+	background-color: #4787ED;
 }
 
 #solving_status {
 	cursor: help;
 }
 
-#guessing_tools_table {
-	border-width: 0px;
-	border-spacing: 0px;
-	margin-top: 10px;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 40px;
-	padding: 0px;
-}
-
 #side_bar {
-	width: 460px;
-	z-index: 2;
-	position: fixed;
-	top: 0px;
-	right: 0px;
+	background-color: #AAA;
 	display: none;
 	height: 100%;
-	background-color: #AAA;
-	/* cursor: w-resize; */
 	overflow: auto;
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	width: 460px;
+	z-index: 2;
 }
 
 #side_bar_close {
-	position: absolute;
-	top: 6px;
-	right: 6px;
-	font-weight: bold;
 	font-family: Arial, sans-serif;
 	font-size: 10pt;
+	font-weight: bold;
+	position: absolute;
+	right: 6px;
+	top: 6px;
 }
 
+
+
+/* Cell section */
 .cell {
 	border-bottom-style: none;
 	border-color: black;
 	border-right-style: none;
 	border-style: dotted;
 	border-width: 1px;
-	
 	font-family: Arial, sans-serif;
 	font-size: 24pt;
 	font-weight: bold;
 	height: 42px;
+	max-width: 56px;
+	padding: 0px;
 	text-align: center;
 	vertical-align: middle;
 	width: 56px;
 }
 
-.cell input {
+.cell .input {
+	border-radius: 0px;
+	border: 1px solid grey;
+	box-sizing: border-box;
 	font-family: Arial, sans-serif;
 	font-size: 22pt;
 	font-weight: bold;
 	height: 36px;
+	margin: 0px;
+	max-width: 52px;
+	padding: 0px;
 	text-align: center;
 	width: 52px;
+}
+
+.candidates {
+	border-bottom-style: none;
+	border-color: black;
+	border-right-style: none;
+	border-style: dotted;
+	border-width: 1px;
+	color: blue;
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	height: 19px;
+	text-align: left;
+	text-decoration: none;
+	vertical-align: bottom;
+	width: 54px;
+}
+
+.cell_bottom_border {
+	border-bottom: 2px solid black;
+}
+
+.cell_top_border {
+	border-top: 2px solid black;
+}
+
+.cell_left_border {
+	border-left: 2px solid black;
+}
+
+.cell_right_border {
+	border-right: 2px solid black;
 }
 
 .cell_highlighted {
 	background-color: #CCFFCC;
 }
 
-.cell_highlighted input {
+.cell_highlighted .input {
 	background-color: #CCFFCC;
 	border-color: silver;
 	border-style: solid;
@@ -176,25 +201,6 @@ a:active {
 .cell_hint {
 	font-style: italic;
 	color: grey;
-}
-
-.candidates {
-	border-bottom-style: none;
-	border-color: black;
-	border-right-style: none;
-	border-style: dotted;
-	border-width: 1px;
-
-	color: blue;
-	font-family: "Arial Narrow", sans-serif;
-	font-size: 8pt;
-	font-style: normal;
-	height: 19px;
-	padding-left: 2px;
-	text-align: left;
-	text-decoration: none;
-	vertical-align: bottom;
-	width: 54px;
 }
 
 .candidates_highlighted {
@@ -209,17 +215,302 @@ a:active {
 	color: red;
 }
 
-.small_header {
+
+
+/* Control section */
+.control {
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	float: left;
 	font-family: Arial, sans-serif;
-	font-size: 10pt;
+	font-size: 20px;
 	font-weight: bold;
-	margin: 10px;
+	height: 35px;
+	line-height: 35px;
+	margin: 0px 0px 20px 0px;
+	text-align: center;
+	width: 536px;
+}
+
+.control > a {
+	color: white;
+	display: block;
+	height: 100%;
+	text-decoration: none;
+	width: 100%;
+}
+
+.control_label {
+	clear: both;
+	color: black;
+	float: left;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px 0px 5px 0px;
+	text-align: center;
+	width: 536px;
+}
+
+.difficulty_control {
+	background-color: #6C93F7;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	margin: 3px 0px 3px 3px;
+	width: 101px;
+}
+
+.difficulty_control_selected {
+	background-color: #2B62B6;
+}
+
+#difficulty_easy {
+	margin-left: 0px;
+}
+
+#difficulty_diabolical {
+	width: 120px;
+}
+
+#difficulty_custom {
+	margin-right: 0px;
 }
 
 .highlight_button {
+	background-color: grey;
+	border-radius: 0px;
+	color: white;
+	cursor: pointer;
+	float: left;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	margin: 0px 0px 20px 3px;
+	text-align: center;
+	width: 40px;
+}
+
+#highlight_0 {
+	background-color: #222222;
+	border-radius: 0px 5px 5px 0px;
+	width: 109px;
+}
+
+#highlight_1 {
+	background-color: #BBBBBB;
+	border-radius: 5px 0px 0px 5px;
+	margin-left: 20px;
+}
+
+#highlight_2 {
+	background-color: #AAAAAA;
+}
+
+#highlight_3 {
+	background-color: #999999;
+}
+
+#highlight_4 {
+	background-color: #888888;
+}
+
+#highlight_5 {
+	background-color: #777777;
+}
+
+#highlight_6 {
+	background-color: #666666;
+}
+
+#highlight_7 {
+	background-color: #555555;
+}
+
+#highlight_8 {
+	background-color: #444444;
+}
+
+#highlight_9 {
+	background-color: #333333;
+}
+
+#pencilmarks_label {
+	float: left;
+	width: 202px;
+}
+
+#update_pencilmarks {
+	background-color: #0CCE0C;
+	clear: left;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	padding: 0px;
+	width: 100px;
+}
+
+#reset_pencilmarks {
+	background-color: #FF1A1A;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	margin-left: 2px;
+	padding: 0px;
+	width: 100px;
+}
+
+#auto_pencilmarks_label {
+	clear: none;
+	float: right;
+	text-align: right;
+	width: 250px;
+}
+
+#auto_pencilmarks {
+	float: right;
+	margin-right: 75px;
+	width: 100px;
+	background-color: #2B69C7;
+	color: white;
+}
+
+.enter_controls {
+	width: 267px;
+	height: 35px;
+	line-height: 35px;
+	float: left;
+	background-color: #6DE296;
+}
+
+.enter_controls_selected {
+	background-color: #27C27A;
+}
+
+#enter_pencilmarks {
+	margin-left: 2px;
+}
+
+#show_duplicates {
+	width: 536px;
+}
+
+.show_duplicates {
+	background-color: #2B69C7;
+	color: white;
+}
+
+.show_duplicates_selected {
+	/* background-color: white;
+	color: black; */
+}
+
+.mark_blank_cells {
+	background-color: white;
+	margin-left: 3px;
+	width: 105px;
+}
+
+.mark_blank_cells_selected {
+	background-color: #FFF475;
+}
+
+#mark_blank_cells_0 {
+	color: black;
 	margin-left: 0px;
-	margin-right: 0px;
-	padding: 1px 4px;
+}
+
+#mark_blank_cells_1 {
+	color: blue;
+}
+
+#mark_blank_cells_2 {
+	color: #FF1A1A;
+	width: 100px;
+}
+
+#mark_blank_cells_3 {
+	color: #009900;
+}
+
+#mark_blank_cells_4 {
+	color: #990099;
+	width: 109px;
+}
+
+.delete_cells {
+	margin-left: 3px;
+	width: 105px;
+}
+
+#delete_cells_0 {
+	background-color: black;
+	margin-left: 0px;
+}
+
+#delete_cells_1 {
+	background-color: blue;
+}
+
+#delete_cells_2 {
+	background-color: #FF1A1A;
+	width: 100px;
+}
+
+#delete_cells_3 {
+	background-color: #009900;
+}
+
+#delete_cells_4 {
+	background-color: #990099;
+	width: 109px;
+}
+
+#show_solution {
+	background-color: #2B69C7;
+	width: 267px;
+}
+
+#get_hint {
+	background-color: #2B69C7;
+	width: 266px;
+	margin-left: 3px;
+}
+
+#help_about {
+	background-color: #0CCE0C;
+	border: none;
+	clear: left;
+	float: left;
+	height: 42px;
+	line-height: 42px;
+	margin-bottom: 5px;
+	padding: 0px;
+	width: 177px;
+}
+
+#clear_cells {
+	background-color: #FF1A1A;
+	border: none;
+	float: left;
+	height: 42px;
+	line-height: 42px;
+	margin-bottom: 5px;
+	margin-left: 2px;
+	padding: 0px;
+	width: 178px;
+}
+
+#save_load {
+	background-color: blue;
+	float: left;
+	height: 42px;
+	line-height: 42px;
+	margin-bottom: 5px;
+	margin-left: 2px;
+	width: 177px;
 }
 
 .blank_cell_highlight_black input {
@@ -242,12 +533,19 @@ a:active {
 	color: purple;
 }
 
-.large_button {
-	background-color: #305BC9;
-	background-image: url(Images/button_background.png);
+.small_header {
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+	margin: 10px;
 }
 
-.large_button_hover {
-	background-color: #4787ED;
-	background-image: url(Images/button_background_hover.png);
+/* Mobile */
+.mobile #grid_table {
+	margin: auto;
+}
+
+.mobile #controls {
+	/* float: left;
+	position: static; */
 }

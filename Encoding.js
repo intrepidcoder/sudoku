@@ -1,3 +1,23 @@
+// encoding.js - Encodes and decodes Sudoku puzzles to store as cookies.
+// Copyright (C) 2013 Daniel Moyer
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+// Email: daniel@intrepidcoder.com
+
+
 function encode(input) {
 	var result = "";
 	var currentCell;
@@ -117,8 +137,8 @@ function decode(input) {
 	cells.blankCellColor = parseInt(input.charAt(243));
 	
 	// Highlight selected color link.
-	document.getElementById("mark_blank_cells_0").style.backgroundColor = "";
-	document.getElementById("mark_blank_cells_" + cells.blankCellColor).style.backgroundColor = "#FF8";
+	document.getElementById("mark_blank_cells_0").classList.remove("mark_blank_cells_selected");
+	document.getElementById("mark_blank_cells_" + cells.blankCellColor).classList.add("mark_blank_cells_selected");
 	
 	
 	var puzzle = new Puzzle(values);
@@ -128,12 +148,9 @@ function decode(input) {
 		return;
 	}
 
-	document.getElementById("top_bar").style.display = "none";
-	document.getElementById("begin_solving").style.display = "none";
+	document.getElementById("directions").style.display = "none";
+	document.getElementById("begin_solving_button").style.display = "none";
 	document.getElementById("controls").style.display = "block";
-	document.getElementById("grid_table").style.position = "static";
-	document.getElementById("grid_table").style.marginTop = "8px";
-	document.getElementById("grid_table").style.marginLeft = "8px";
 	document.getElementById("side_bar").style.display = "none";
 	
 	document.getElementById("import_save_button").title = "This option is disabled when a sudoku puzzle is in progress.";
@@ -178,5 +195,4 @@ function saveToCookie() {
 	} else {
 		alert("Save failed. Make sure cookies are enabled in your browser.");
 	}
-	
 }

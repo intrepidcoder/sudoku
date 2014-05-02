@@ -1,3 +1,23 @@
+// sudoku.js - Provides Sudoku solving tools.
+// Copyright (C) 2013 Daniel Moyer
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+// Email: daniel@intrepidcoder.com
+
+
 var cells = [];
 
 function inputOnKeyDown(e) {
@@ -69,16 +89,12 @@ function inputOnKeyDown(e) {
 			document.getElementById("cell" + pos + "_input").focus();
 		break;
 
-		// 65-90 a-z
-		// 48-57 0-9
-		// 97-105 numpad 0-9
-
 		default:
 
 			// function keys
 			if (code >= 112 && code <= 123) {
 				return true;
-			} else if (document.getElementById("write_mode_values").checked) {
+			} else if (document.getElementById("enter_values").classList.contains("enter_controls_selected")) {
 
 				// backspace || delete
 				if (code === 8 || code === 46) {
@@ -91,7 +107,7 @@ function inputOnKeyDown(e) {
 					
 					// Before givens are submitted, automatically update pencilmarks.
 					if (!cells.hasOwnProperty("solution")) {
-						updatePencilmarks();
+						// updatePencilmarks();
 					} 
 				}
 
@@ -108,8 +124,8 @@ function inputOnKeyDown(e) {
 
 					// Before givens are submitted, automatically update pencilmarks.
 					if (!cells.hasOwnProperty("solution")) {
-						updatePencilmarks();
-					} else if (document.getElementById("auto_pencilmarks").checked) {
+						// updatePencilmarks();
+					} else if (document.getElementById("auto_pencilmarks").classList.contains("auto_pencilmarks_selected")) {
 						for (var i = 0; i < 20; i++) {
 							if (currentCell.neighbors[i].value === 0) {
 
@@ -150,6 +166,12 @@ function inputOnFocus() {
 function updatePencilmarks() {
 	var currentCell;
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Update Pencilmarks');
+	}
+	
+	
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 
@@ -171,6 +193,12 @@ function updatePencilmarks() {
 function clearPencilmarks() {
 	var currentCell;
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Reset Pencilmarks');
+	}
+	
+	
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 		currentCell.pencilmarks = [true, true, true, true, true, true, true, true, true];
@@ -188,7 +216,7 @@ function clearPencilmarks() {
 function showDuplicates() {
 	var currentCell;
 
-	if (document.getElementById("show_duplicates").checked) {
+	if (document.getElementById("show_duplicates").classList.contains("show_duplicates_selected")) {
 
 		for (var i = 0; i < 81; i++) {
 			currentCell = cells[i];
@@ -216,7 +244,6 @@ function clearCells() {
 }
 
 function pastePuzzle() {
-	// var values = window.prompt("Enter a sudoku puzzle. Use \"0\", \".\", \"*\", or \"_\" for empty cells.\nAll other characters are ignored.\nAlternatively, load a previously saved puzzle.");
 	var values = document.getElementById("paste_puzzle").value;
 	
 	values = values.replace(/[.*_]/g, "0");
@@ -260,6 +287,17 @@ function saveLoadPuzzle() {
 }
 
 function highlight(value) {
+	
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Highlight ' + value);
+	}
+	
+	
+	if (typeof value !== "number" && value !== 0) {
+		value = parseInt(this.number);
+	}
+	
 	if (value === 0) {
 		for (var i = 0; i < 81; i++) {
 			cells[i].element.classList.remove("cell_highlighted");
@@ -286,48 +324,67 @@ function submitGivens() {
 	var currentCell;
 	var values = "";
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Begin Solving');
+	}
+	
+	for (var i = 0; i < 81; i++) {
+		currentCell = cells[i];
+		values += currentCell.value;
+	}
+
+	var solution = "";
+	
+	if (document.getElementById("solution")) {
+		solution = document.getElementById("solution").value;
+	}
+	
+	if (solution.length !== 81 || /[^0-9]/.test(solution)) {
+		var puzzle = new Puzzle(values);
+		
+		if (!puzzle.hasSolution()) {
+			alert("There is no solution for the inputted values.");
+			return;
+		}
+		
+		cells.solution = puzzle.toString();
+	} else {
+		cells.solution = solution;
+		document.body.removeChild(document.getElementById("solution_wrapper"));
+	}
+
+	document.getElementById("directions").style.display = "none";
+	document.getElementById("begin_solving_button").style.display = "none";
+	document.getElementById("side_bar").style.display = "none";
+	document.getElementById("controls").style.display = "block";
+	
+	document.getElementById("import_save_button").title = "This option is disabled when a sudoku puzzle is in progress.";
+	document.getElementById("import_save_button").disabled = true;
+	document.getElementById("paste_puzzle_button").title = "This option is disabled when a sudoku puzzle is in progress.";
+	document.getElementById("paste_puzzle_button").disabled = true;
+	document.getElementById("load_cookie").title = "This option is disabled when a sudoku puzzle is in progress.";
+	document.getElementById("load_cookie").disabled = true;
+		
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 
-		values += currentCell.value;
-
-	}
-
-	var puzzle = new Puzzle(values);
-
-	if (!puzzle.hasSolution()) {
-		alert("There is no solution for the inputted values.");
-	} else {
-
-		document.getElementById("top_bar").style.display = "none";
-		document.getElementById("begin_solving").style.display = "none";
-		document.getElementById("controls").style.display = "block";
-		document.getElementById("grid_table").style.position = "static";
-		document.getElementById("grid_table").style.marginTop = "8px";
-		document.getElementById("grid_table").style.marginLeft = "8px";
-		document.getElementById("side_bar").style.display = "none";
-		
-		document.getElementById("import_save_button").title = "This option is disabled when a sudoku puzzle is in progress.";
-		document.getElementById("import_save_button").disabled = true;
-		document.getElementById("paste_puzzle_button").title = "This option is disabled when a sudoku puzzle is in progress.";
-		document.getElementById("paste_puzzle_button").disabled = true;
-		document.getElementById("load_cookie").title = "This option is disabled when a sudoku puzzle is in progress.";
-		document.getElementById("load_cookie").disabled = true;
-		
-		cells.solution = puzzle.toString();
-		for (var i = 0; i < 81; i++) {
-			currentCell = cells[i];
-
-			if (currentCell.value !== 0) {
-				currentCell.element.innerHTML = currentCell.value;
-				currentCell.isGiven = true;
-			} else {
-				currentCell.element.classList.add("blank_cell_highlight_black");
-			}
-
-			currentCell.solution = parseInt(cells.solution[i]);
+		if (currentCell.value !== 0) {
+			currentCell.element.innerHTML = currentCell.value;
+			currentCell.isGiven = true;
+		} else {
+			currentCell.element.classList.add("blank_cell_highlight_black");
 		}
+
+		currentCell.solution = parseInt(cells.solution[i]);
 	}
+
+	document.getElementById("controls").appendChild(document.getElementById("options"));
+	
+	
+	bindEventListener(window, "beforeunload", function(e) {
+		e.returnValue = "You have unsaved changes.";
+	});
 }
 
 function showSolution() {
@@ -339,6 +396,10 @@ function showSolution() {
 		return;
 	}
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Show Solution');
+	}
 	
 	for (var i = 0; i < 9; i++) {
 		row = i * 9;
@@ -360,48 +421,17 @@ function showSolution() {
 	currentElement = window.solutionWindow.document.head.appendChild(document.createElement("title"));
 	currentElement.textContent = "Solution";
 	
-	
-	
 	currentElement = window.solutionWindow.document.body.appendChild(document.createElement("div"));
 	
 	currentElement.innerHTML = solution;
 	currentElement.style.fontFamily = "Consolas, Courier New, monospace";
-	currentElement.style.fontColor = "#666";
+	currentElement.style.fontColor = "#666666";
 	currentElement.style.fontSize = "15px";
 	
-	window.onunload = function() {
+	bindEventListener(window, "beforeunload", function() {
 		window.solutionWindow.close();
-	};
-	
-	
-	
-	// if (document.getElementById("show_solution").checked) {
-		// if (!window.confirm("Are you sure you want to show the solution?")) {
-			// document.getElementById("show_solution").checked = false;
-			// return;
-		// }
+	});
 
-		// for (var i = 0; i < 81; i++) {
-			// currentCell = cells[i];
-
-			// if (currentCell.element.children.length > 0) {
-				// currentCell.element.firstChild.value = currentCell.solution;
-				// currentCell.element.firstChild.disabled = true;
-			// }
-
-
-		// }
-	// } else {
-		// for (var i = 0; i < 81; i++) {
-			// currentCell = cells[i];
-
-			// if (currentCell.element.children.length > 0) {
-				// currentCell.element.firstChild.disabled = false;
-
-				// currentCell.element.firstChild.value = currentCell.value === 0 ? "" : currentCell.value;
-			// }
-		// }
-	// }
 }
 
 function getHint() {
@@ -411,6 +441,11 @@ function getHint() {
 
 	var currentCell = cells[cells.lastSelectedCell];
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Get Hint');
+	}
+	
 	if (cells.hints > 0 && currentCell.element.children.length > 0) {
 		currentCell.value = currentCell.solution;
 		currentCell.candidatesElement.innerHTML = currentCell.value + "";
@@ -420,48 +455,58 @@ function getHint() {
 		showDuplicates();
 
 		cells.hints--;
-		document.getElementById("get_hint").value = "Hint (" + cells.hints + ")";
+		this.textContent = "Hint (" + cells.hints + ")";
 
 		if (cells.hints === 2) {
-			document.getElementById("get_hint").title = "Give a hint for the selected cell. There are two hints remaining.";
+			this.title = "Give a hint for the selected cell. There are two hints remaining.";
 		} else if (cells.hints === 1) {
-			document.getElementById("get_hint").title = "Give a hint for the selected cell. There is one hint remaining.";
-
+			this.title = "Give a hint for the selected cell. There is one hint remaining.";
 		} else if (cells.hints <= 0) {
-			document.getElementById("get_hint").disabled = true;
-			document.getElementById("get_hint").title = "There are no more hints remaining.";
+			this.disabled = true;
+			this.title = "There are no more hints remaining.";
 		}
 
 	}
 }
 
-function setBlankCells(color) {
+function setBlankCells() {
+	var color = parseInt(this.number);
 	var currentCell;
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Set Blank Cells ' + color);
+	}
+	
 	for (var i = 0; i < 81; i++) {
 		currentCell = cells[i];
 
 		if (currentCell.value === 0) {
 			currentCell.setColor(color);
-			
 		}
-
 	}
 	
 	// Highlight selected link.
-	document.getElementById("mark_blank_cells_" + cells.blankCellColor).style.backgroundColor = "";
-	document.getElementById("mark_blank_cells_" + color).style.backgroundColor = "#FF8";
+	document.getElementById("mark_blank_cells_" + cells.blankCellColor).classList.remove("mark_blank_cells_selected");;
+	this.classList.add("mark_blank_cells_selected");
 	
 	cells.blankCellColor = color;
 }
 
-function deleteColoredCells(color) {
+function deleteColoredCells() {
+	var color = parseInt(this.number);
 	var colorValueList = ["black", "blue", "red", "green", "purple"];
 	
 	if (!confirm("Are you sure you want to delete all cells marked " + colorValueList[color] + "?")) {
 		return;
 	}
 
+	// Log event.
+	if (window.ga) { 
+		ga('send', 'event', "sudoku", 'click', 'Sudoku - Delete ' + colorValueList[color] + ' Cells');
+	}
+	
+	
 	var currentCell;
 
 	for (var i = 0; i < 81; i++) {
@@ -480,7 +525,8 @@ function deleteColoredCells(color) {
 }
 
 window.onload = function() {
-	window.location = "http://www.intrepidcoder.com/projects/sudoku/";
+	document.getElementById("noscript").style.display = "none"; // Hide this first.
+	
 	
 	var Cell = function(index) {
 		this.index = index;
@@ -603,65 +649,40 @@ window.onload = function() {
 		};
 		
 		this.setValue(0);
-		
-		
 	};
 
-	var tabIndex = 1;
+	var isMobile = /android|webos|iphone|ipod|blackberry/i.test(navigator.userAgent.toLowerCase());
+	
+	var currentCell, currentInput;
 
-	var grid_table = document.getElementById("grid_table");
-	var currentRow, currentCell, currentInput;
-	var currentCandidateRow;
-
+	if (isMobile) {
+		document.body.classList.add("mobile");
+	}
+	
 	for (var row = 0; row < 9; row++) {
-		currentRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
-		currentCandidateRow = grid_table.children[0].appendChild(document.createElement("tr")); // Append row to <tbody>
-
 		for (var col = 0; col < 9; col++) {
 			currentCell = new Cell(row * 9 + col);
 			cells[row * 9 + col] = currentCell;
 
-			currentCell.element = currentRow.appendChild(document.createElement("td"));
-			currentCell.element.classList.add("cell");
-			currentCell.candidatesElement = currentCandidateRow.appendChild(document.createElement("td"));
-			currentCell.candidatesElement.classList.add("candidates");
-
-			currentInput = currentCell.element.appendChild(document.createElement("input"));
+			currentCell.element = document.getElementById("cell"+(row * 9 + col));
+			currentCell.candidatesElement = document.getElementById("candidates"+(row * 9 + col));
 			
-			if (/android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase())) {
+			if (currentCell.element.firstChild && parseInt(currentCell.element.firstChild.value) > 0) {
+				currentCell.setValue(parseInt(currentCell.element.firstChild.value));
+			}
+
+			currentInput = document.getElementById("cell"+(row * 9 + col)+"_input");
+			
+			if (isMobile) {
 				currentInput.type = "tel";
-			} else {
-				currentInput.type = "text";
 			}
 			
-			currentInput.tabIndex = tabIndex;
-			tabIndex++;
-
 			currentInput.index = currentCell.index;
-			currentInput.id = "cell" + currentCell.index + "_input";
 			currentInput.onkeydown = inputOnKeyDown;
 			currentInput.onfocus = inputOnFocus;
-
-			if (row === 0 || row === 3 || row === 6) {
-				currentCell.element.style.borderTopStyle = "solid";
-				currentCell.element.style.borderTopWidth = "2px";
-			} else if (row === 8) {
-				currentCell.candidatesElement.style.borderBottomStyle = "solid";
-				currentCell.candidatesElement.style.borderBottomWidth = "2px";
-			}
-
-			if (col === 0 || col === 3 || col === 6) {
-				currentCell.element.style.borderLeftStyle = "solid";
-				currentCell.candidatesElement.style.borderLeftStyle = "solid";
-				currentCell.element.style.borderLeftWidth = "2px";
-				currentCell.candidatesElement.style.borderLeftWidth = "2px";
-			} else if (col === 8) {
-				currentCell.element.style.borderRightStyle = "solid";
-				currentCell.candidatesElement.style.borderRightStyle = "solid";
-				currentCell.element.style.borderRightWidth = "2px";
-				currentCell.candidatesElement.style.borderRightWidth = "2px";
-			}
-
+			
+			// bindEventListener(currentInput, "keydown", inputOnKeyDown);
+			// bindEventListener(currentInput, "focus", inputOnFocus);
 		}
 	}
 
@@ -669,48 +690,80 @@ window.onload = function() {
 	cells.hints = 3;
 	cells.blankCellColor = 0;
 	
-	// cells.getColorIndex = function(color) {
-		// var colorIndexList = {"black":0, "blue":1, "red":2, "green":3, "purple": 4};
-		// return colorIndexList[color];
-	// }
+	clearPencilmarks();
 	
-	// cells.getColorValue = function(num) {
-		// var colorValueList = ["black", "blue", "red", "green", "purple"];
-		// return colorValueList[num];
-	// }
+	bindEventListener(document.getElementById("begin_solving_button"), "click", submitGivens);
+	bindEventListener(document.getElementById("paste_puzzle"), "keydown", function (e) {
+		if (event && event.keyCode === 13) {
+			pastePuzzle();
+		}
+	});
 	
-	updatePencilmarks();
+	bindEventListener(document.getElementById("import_save"), "keydown", function (e) {
+		if (event && event.keyCode === 13) {
+			decode(document.getElementById("import_save").value);
+		}
+	});
 	
-	// var sideBar = document.body.appendChild(document.createElement("div"));
-	// var sideBarDragPos = 0;
+	bindEventListener(document.getElementById("save_load"), "click", saveLoadPuzzle);
 	
-	// sideBar.id = "side_bar";
-	// sideBar.style.width = "450px";
+	for (var i = 0; i < 10; i++) {
+		document.getElementById("highlight_" + i).number = i;
+		
+		bindEventListener(document.getElementById("highlight_" + i), "click", highlight);
+	}
+
+	bindEventListener(document.getElementById("update_pencilmarks"), "click", updatePencilmarks);
+	bindEventListener(document.getElementById("reset_pencilmarks"), "click", clearPencilmarks);
+	bindEventListener(document.getElementById("auto_pencilmarks"), "click", function(e) {
+		this.classList.toggle("auto_pencilmarks_selected");
+		if (this.textContent == "On") {
+			this.textContent = "Off";
+		} else {
+			this.textContent = "On";
+		}
+	});
 	
-	// sideBar.onmousedown = function() {
-		// sideBarDragPos = window.event.clientX;
-	// }
+	bindEventListener(document.getElementById("enter_values"), "click", function(e) {
+		document.getElementById("enter_pencilmarks").classList.toggle("enter_controls_selected");
+		this.classList.toggle("enter_controls_selected");
+	});
 	
-	// sideBar.onmousemove = function() {
-		// if (sideBarDragPos) {
-			// if (sideBarDragPos - window.event.clientX < 0) {
-				// sideBar.style.right = (sideBarDragPos - window.event.clientX) + "px";
-			// }
-		// }
-	// }
+	bindEventListener(document.getElementById("enter_pencilmarks"), "click", function(e) {
+		document.getElementById("enter_values").classList.toggle("enter_controls_selected");
+		this.classList.toggle("enter_controls_selected");
+	});
+	bindEventListener(document.getElementById("show_duplicates"), "click", function(e) {
+		this.classList.toggle("show_duplicates_selected");
+		if (this.textContent == "On") {
+			this.textContent = "Off";
+		} else {
+			this.textContent = "On";
+		}
+	});
+	bindEventListener(document.getElementById("show_duplicates"), "click", showDuplicates);
+	bindEventListener(document.getElementById("show_solution"), "click", showSolution);
+	bindEventListener(document.getElementById("get_hint"), "click", getHint);
 	
-	// sideBar.onmouseup = function() {
-		// sideBar.style.right = -parseInt(sideBar.style.width) + "px";
-		// sideBarDragPos = 0;
-	// }
+	for (var i = 0; i < 5; i++) {
+		document.getElementById("mark_blank_cells_" + i).number = i;
+		document.getElementById("delete_cells_" + i).number = i;
+		
+		bindEventListener(document.getElementById("mark_blank_cells_" + i), "click", setBlankCells);
+		bindEventListener(document.getElementById("delete_cells_" + i), "click", deleteColoredCells);
+	}
 	
-	// var currentElement = sideBar.appendChild(document.createElement("div"));
-	
-	// currentElement.className = "small_header";
-	// currentElement.textContent = "Paste Puzzle:";
-	
-	// currentElement = sideBar.appendChild(document.createElement("input"));
-	// currentElement.type = "text";
-	// currentElement.id = "paste_puzzle";
-	
+	if (document.getElementById("solution") && document.getElementById("solution").value) {
+		submitGivens();
+	} else {
+		document.getElementById("controls").style.display = "none";
+	}
 };
+
+function bindEventListener(element, eventString, listenerFunction) {
+    if (element.addEventListener){
+        element.addEventListener(eventString, listenerFunction, false);
+    } else if (element.attachEvent) {
+        element.attachEvent('on' + eventString, listenerFunction);
+    }
+}
