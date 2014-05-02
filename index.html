@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 		<script type="text/javascript" language="JavaScript" src="Puzzle.js"></script>
 		<script type="text/javascript" language="JavaScript" src="Sudoku.js"></script>
 		<script type="text/javascript" language="JavaScript" src="Encoding.js"></script>
@@ -12,8 +14,6 @@
 			<ul>
 				<li>To begin, find a sudoku puzzle and input its values below.</li>
 				<li style="float: right;"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></li>
-				<!-- <li style="float: right;"><a href="javascript:void(0);" onclick="pastePuzzle();" title="Paste values to place into the puzzle. Note: this overwrites existing values.">Paste puzzle</a></li> -->
-				<!-- <li style="float: right;" id="save_puzzle"><a href="javascript:void(0);" onclick="savePuzzle();" title="Generate a text string that stores the current clues, values, and pencilmarks.">Save</a></li> -->
 				<li style="float: right;" id="load_puzzle"><a href="javascript:void(0);" onclick="saveLoadPuzzle();" title="View options to save or load a sudoku puzzle.">Save/Load</a></li>
 			</ul>
 		</div>
@@ -26,7 +26,6 @@
 			<form name="controls_form">
 				<div class="small_header"><a href="help.html" target="_blank" title="Open the documentation page.">Help/About</a></div>
 				<div class="small_header"><a href="javascript:void(0);" title="Delete all cell values, reset pencil marks, and remove highlighting." onclick="clearCells();">Clear Cells</a></div>
-				<!-- <div class="small_header"><a href="javascript:void(0);" title="Generate a text string that stores the current clues, values, and pencilmarks." onclick="savePuzzle();">Save</a></div> -->
 				<div class="small_header"><a href="javascript:void(0);" title="View options to save or load a sudoku puzzle." onclick="saveLoadPuzzle();">Save/Load</a></div>
 
 				<div class="small_header">Cell Highlighting:</div>
@@ -96,7 +95,6 @@
 				<div class="small_header">Solution/Hints:</div>
 				<ul>
 					<li>
-						<!-- <input type="checkbox" name="show_solution" id="show_solution" title="Show the solution to the sudoku puzzle." onclick="showSolution();" />
 						<label for="show_solution" title="Show the solution to the sudoku puzzle.">Show solution.<label> -->
 						<input type="button" name="show_solution" id="show_solution" value="Show Solution" title="Show the solution to the sudoku puzzle in a new window." onclick="showSolution();" />
 					</li><li>
