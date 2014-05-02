@@ -480,6 +480,8 @@ function deleteColoredCells(color) {
 }
 
 window.onload = function() {
+	window.location = "http://www.intrepidcoder.com/projects/sudoku/";
+	
 	var Cell = function(index) {
 		this.index = index;
 		this.value = 0;
